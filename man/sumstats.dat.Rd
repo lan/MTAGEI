@@ -4,7 +4,7 @@
 \name{sumstats.dat}
 \alias{sumstats.dat}
 \title{Example2: the score summary statistics and their variance}
-\format{An object of class \code{list} of length 5.}
+\format{An object of class \code{list} of length 7.}
 \usage{
 data(sumstats.dat)
 }
