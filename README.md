@@ -31,7 +31,7 @@ Specifically, `MAGENTA` package has functions to
 ![Fig 1: An overview of MAGENTA workflow. Light blue rectangle
 represents necessary input. Dark blue rectangle denotes the final output
 of MAGENTA function. Gray rectangle denotes the intermediate
-parameters.](%22/vignettes/workflow.png%22)
+parameters.](%22/Users/luolan2/Project/MAGENTA/package/MAGENTA/vignettes/workflow.png%22)
 
 System Requirements
 -------------------
