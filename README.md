@@ -82,9 +82,31 @@ Demo
 
 Detailed instructions can be found in Vignetts/MAGENTA.html file.
 
+URLs
+----
+
+ldsc website:
+<a href="https://github.com/bulik/ldsc/wiki/Heritability-and-Genetic-Correlation" class="uri">https://github.com/bulik/ldsc/wiki/Heritability-and-Genetic-Correlation</a>
+Genetic correlation:
+<a href="https://media.nature.com/original/nature-assets/ng/journal/v47/n11/extref/ng.3406-S2.csv" class="uri">https://media.nature.com/original/nature-assets/ng/journal/v47/n11/extref/ng.3406-S2.csv</a>
+
 References
 ----------
+
+Bulik-Sullivan, Brendan, Hilary K Finucane, Verneri Anttila, Alexander
+Gusev, Felix R Day, John RB Perry, Nick Patterson, et al. 2015. “An
+Atlas of Genetic Correlations Across Human Diseases and Traits.” Nat.
+Genet. 47 (11): 1236–41.
+
+Bulik-Sullivan, Brendan K, Po-Ru Loh, Hilary K Finucane, Stephan Ripke,
+Jian Yang, Nick Patterson, Mark J Daly, et al. 2015. “LD Score
+Regression Distinguishes Confounding from Polygenicity in Genome-Wide
+Association Studies.” Nature Genetics 47 (3): 291.
 
 Luo, Lan, Devan V Mehrotra, Judong Shen, and Zheng-Zheng Tang. 2022.
 “Multi-Trait Analysis of Gene-by-Environment Interactions Using Summary
 Statistics of Genetic Marginal Effects.” Submitted.
+
+Luo, Lan, Judong Shen, Hong Zhang, Aparna Chhibber, Devan V Mehrotra,
+and Zheng-Zheng Tang. 2020. “Multi-Trait Analysis of Rare-Variant
+Association Summary Statistics Using MTAR.” Nat. Commun. 11 (1): 1–11.
