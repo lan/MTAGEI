@@ -21,7 +21,7 @@ Specifically, `MAGENTA` package has functions to
 - compute the summary statistics with different types of data input adjusting for the potential overlapping samples under different assumption of genetic marginal effects; and 
 - perform summary-statistics-based multi-trait analysis of gene-environment interaction (GEI) tests or genetic main effect and GEI joint effect for both common and rare variants.
 
-![Drag Racing]("C:\Users\luolan2\Project\MAGENTA\package\MAGENTA\vignettes\workflow.png")
+![Fig 1: An overview of MAGENTA workflow. Light blue rectangle represents necessary input. Dark blue rectangle denotes the final output of MAGENTA function. Gray rectangle denotes the intermediate parameters.]("/vignettes/workflow.png")
 
 ## System Requirements
 

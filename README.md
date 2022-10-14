@@ -28,8 +28,10 @@ Specifically, `MAGENTA` package has functions to
     gene-environment interaction (GEI) tests or genetic main effect and
     GEI joint effect for both common and rare variants.
 
-![Drag
-Racing](%22C:\Users\luolan2\Project\MAGENTA\package\MAGENTA\vignettes\workflow.png%22)
+![Fig 1: An overview of MAGENTA workflow. Light blue rectangle
+represents necessary input. Dark blue rectangle denotes the final output
+of MAGENTA function. Gray rectangle denotes the intermediate
+parameters.](%22/vignettes/workflow.png%22)
 
 System Requirements
 -------------------
