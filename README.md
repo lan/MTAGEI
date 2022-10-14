@@ -50,9 +50,9 @@ Installing Guide
 ----------------
 
 `MAGENTA` package requires R with version 3.6.1 or higher, which can be
-downloaded and installed from [CRAN](https://cran.r-project.org/).
+downloaded and installed from [Github](https://github.com/lan/MAGENTA).
 
-    install.packages("MAGENTA")
+    install.packages("MAGENTA.tar.gz", repos = NULL, type = "source")
 
 ### Package dependencies
 
