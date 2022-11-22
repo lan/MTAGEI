@@ -64,7 +64,10 @@ This function allows you to calculate MAGENTA joint or GEI test p value using eq
 }
 \examples{
 \donttest{
+<<<<<<< HEAD
 #### start from individual-level data
+=======
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 #' data(rawdata)
 names(rawdata)
 attach(rawdata)
@@ -91,6 +94,7 @@ test = "joint", way = "eq3",MAF = MAF,
  trait.list = trait.list,
   drug.list = drug.list)
 detach(rawdata)
+<<<<<<< HEAD
 
 #### start from score summary statistics
 data(sumstats.dat)
@@ -111,6 +115,8 @@ MAGENTA(beta.sumstats.obj = beta.sumstats.obj,
         trait.list = trait.list,
         drug.list = drug.list)
 detach(sumstats.dat)
+=======
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 }
 }
 \author{

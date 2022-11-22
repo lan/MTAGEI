@@ -13,7 +13,11 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
                           diffweight = FALSE,
                           threshold = 0.05,
                           weight.commonSNP = NULL,
+<<<<<<< HEAD
                           zeta = NULL,
+=======
+                          zeta = NULL, pval.thres = 1,
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                           rho.SNP = c(0, 0.5, 1),
                           rho.trait = c(0.5, 5, 1),
                           rho.drug = c(0, 0.5, 1),
@@ -215,6 +219,7 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
       Q <- as.numeric(part1 %*% B.all %*% t(part1))
       pvalues <- Get_PValue.Lambda(rho, Q)$p.value
 
+<<<<<<< HEAD
 
     }else{
       pvalues <- NA
@@ -234,6 +239,22 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
   MAGENTA.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+=======
+      p.obs <- c(p.obs, pvalues)
+    }
+  }
+
+  if(cct) {
+    MAGENTA.cct.p <- list(p = ACAT(p.obs[which(p.obs < pval.thres)]), rho1.min = lambda[which.min(p.obs), 2],
+                          rho2.min = lambda[which.min(p.obs), 1],
+                          rho3.min = lambda[which.min(p.obs), 3])
+  }else{
+    MAGENTA.cct.p <- list(p = p.obs, rho1.min = lambda[which.min(p.obs), 2],
+                          rho2.min = lambda[which.min(p.obs), 1],
+                          rho3.min = lambda[which.min(p.obs), 3])
+  }
+
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
   return(MAGENTA.cct.p)
 }
 
@@ -244,7 +265,11 @@ MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
                           rho.trait = c(0.5, 5, 1),
                           cct = TRUE, weight.SNP = c(1, 25),
                           diffweight = FALSE,
+<<<<<<< HEAD
                           threshold = 0.05,
+=======
+                          threshold = 0.05,pval.thres = 1,
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                           weight.commonSNP = NULL)
 {
   lambda <- expand.grid(lambdaA = rho.trait, lambdaC = rho.SNP)
@@ -399,6 +424,7 @@ MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
       Q <- as.numeric(part1 %*% B %*% t(part1))
 
       pvalues <- Get_PValue.Lambda(rho, Q)$p.value
+<<<<<<< HEAD
     }else{
       pvalues <- NA
     }
@@ -417,6 +443,22 @@ MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
   MAGENTA.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+=======
+      p.obs <- c(p.obs, pvalues)
+    }
+  }
+  # p.obs <- ifelse(p.obs == 1, 0.999, p.obs)
+  if(cct) {
+    MAGENTA.cct.p <- list(p = ACAT(p.obs[which(p.obs < pval.thres)]),
+                          rho1.min = lambda[which.min(p.obs), ]$lambdaC,
+                          rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+  }else{
+    MAGENTA.cct.p <- list(p = p.obs,
+                          rho1.min = lambda[which.min(p.obs), ]$lambdaC,
+                          rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+  }
+
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
   return(MAGENTA.cct.p)
 }
 
@@ -426,7 +468,11 @@ MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
                              diffweight = FALSE,
                              threshold = 0.05,
                              weight.commonSNP = NULL,
+<<<<<<< HEAD
                              zeta = NULL,
+=======
+                             zeta = NULL, pval.thres = 1,
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                              rho.SNP = c(0, 0.5, 1),
                              rho.trait = c(0.5, 5, 1),
                              rho.drug = c(0, 0.5, 1),
@@ -740,14 +786,21 @@ MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
 
 
       pvalues <- Get_PValue.Lambda(rho, Q)$p.value
+<<<<<<< HEAD
     }else{
       pvalues <- NA
     }
     p.obs <- c(p.obs, pvalues)
+=======
+      p.obs <- c(p.obs, pvalues)
+    }
+
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
   }
 
   # return(Q)
   if(cct) {
+<<<<<<< HEAD
     p.obs <- p.obs[which(p.obs < 1)]
     if(length(p.obs) == 0){
       p.obs <- NA
@@ -759,6 +812,19 @@ MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
   MAGENTA.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+=======
+    MAGENTA.cct.p <- list(p = ACAT(p.obs[which(p.obs < pval.thres)]),
+                          rho1.min = lambda[which.min(p.obs), ]$lambdaC,
+                          rho2.min = lambda[which.min(p.obs), ]$lambdaA,
+                          rho3.min = lambda[which.min(p.obs), ]$lambdaD)
+  }else{
+    MAGENTA.cct.p <- list(p = p.obs,
+                          rho1.min = lambda[which.min(p.obs), ]$lambdaC,
+                          rho2.min = lambda[which.min(p.obs), ]$lambdaA,
+                          rho3.min = lambda[which.min(p.obs), ]$lambdaD)
+  }
+
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
   return(MAGENTA.cct.p)
 }
 
@@ -768,7 +834,11 @@ MAGENTA.joint.variant <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
                                   diffweight = FALSE,
                                   threshold = 0.05,
                                   weight.commonSNP = NULL,
+<<<<<<< HEAD
                                   zeta = NULL,
+=======
+                                  zeta = NULL, pval.thres = 1,
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                                   rho.SNP = 0,
                                   rho.trait = c(0.5, 1.5, 1),
                                   rho.drug = c(0, 0.5, 1),
@@ -846,6 +916,7 @@ MAGENTA.joint.variant <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
       }
 
       pvalues <- Get_PValue.Lambda(rho, Q)$p.value
+<<<<<<< HEAD
       }else{
       pvalues <- NA
     }
@@ -864,6 +935,22 @@ MAGENTA.joint.variant <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
   MAGENTA.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+=======
+      p.obs <- c(p.obs, pvalues)
+    }
+  }
+
+  if(cct) {
+    MAGENTA.cct.p <- list(p = ACAT(p.obs[which(p.obs < pval.thres)]),
+                          rho1.min = lambda[which.min(p.obs), 2],
+                          rho2.min = lambda[which.min(p.obs), 1],
+                          rho3.min = lambda[which.min(p.obs), 3])
+  }else{
+    MAGENTA.cct.p <- list(p = p.obs, rho1.min = lambda[which.min(p.obs), 2],
+                          rho2.min = lambda[which.min(p.obs), 1],
+                          rho3.min = lambda[which.min(p.obs), 3])
+  }
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 
   return(MAGENTA.cct.p)
 }
@@ -875,7 +962,11 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
                                rho.SNP = 0, rho.trait = c(0.5, 1.5, 1),
                                cct = TRUE, weight.SNP = c(1, 25),
                                diffweight = FALSE,
+<<<<<<< HEAD
                                threshold = 0.05,
+=======
+                               threshold = 0.05,pval.thres = 1,
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                                weight.commonSNP = NULL)
 {
   K <- length(U)
@@ -941,6 +1032,7 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
       }
 
       pvalues <- Get_PValue.Lambda(rho, Q)$p.value
+<<<<<<< HEAD
     }else{
       pvalues <- NA
     }
@@ -1271,6 +1363,332 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
 
 
 variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
+=======
+      p.obs <- c(p.obs, pvalues)
+    }
+  }
+  # p.obs <- ifelse(p.obs == 1, 0.999, p.obs)
+  if(cct) {
+    MAGENTA.cct.p <- list(p = ACAT(p.obs[which(p.obs < pval.thres)]),
+                          rho1.min = lambda[which.min(p.obs), ]$lambdaC,
+                          rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+  }else{
+    MAGENTA.cct.p <- list(p = p.obs,
+                          rho1.min = lambda[which.min(p.obs), ]$lambdaC,
+                          rho2.min = lambda[which.min(p.obs), ]$lambdaA)
+  }
+
+  return(MAGENTA.cct.p)
+}
+
+
+SPA_MAGENTA_diffU <- function(simdata, genotype, sumstats, zeta, zeta.list, zeta.GE,
+                              selSNP, MAF, R.C, KA, MAC.thres, way, MACadj = FALSE){
+
+  pval.main <- pval.joint <- pval.GEI <- NULL
+
+  if(length(selSNP) != 0) {
+
+    genotype <- genotype[, colnames(genotype) %in% selSNP, drop = FALSE]
+    drug.list <- unique(simdata$covariates[, 3])
+    D <- length(drug.list) # number of different drug assignments
+    trait.list <- colnames(simdata$traits)
+    K <- length(trait.list) # number of different drug response traits
+    snp.list <- colnames(genotype)
+    # m <- length(snp.list) # number of rare variants in a gene
+    L <- length(grep("cov", colnames(simdata$covariates))) # number of covariates
+
+    obs.stat.SPA <- list() # each drug has three traits summary statistics
+    MAC.perSNP <- NULL # if 1 then the MAC passes the threshold, 0 otherwise
+    for(d in 1:D) {
+      # extract subjects with d drug assignment
+      subject.ind <- which(simdata$covariates[, 3] == drug.list[d])
+      subset <- list(traits = simdata$traits[subject.ind, ,drop = FALSE],
+                     covariates = simdata$covariates[subject.ind, ,drop = FALSE],
+                     genotype = genotype[subject.ind, ,drop = FALSE])
+      if(any(names(simdata)  ==  "status")) {
+        # if there is survival type data, add the failure indicators
+        subset[["status"]] <- simdata$status[subject.ind, , drop = FALSE]
+      }
+
+      ## MAC count in each group
+      MAC.perSNP <- rbind(MAC.perSNP, ifelse(colSums(genotype[subject.ind, ,drop = FALSE])> MAC.thres, 1, 0))
+      if(way %in% c(1, 2, 3)) {
+        # calculate summary statistics for different type of traits
+        obs.stat.bydrug <- list()
+
+        for(k in 1:K) {
+          Y <- subset$traits[, k]
+          valid.id <- which(!is.na(Y)) # extract valid value
+          trait.dat <- Y[valid.id]
+          status.ind <- which(colnames(subset$status) %in% paste0("Trait", k))
+          if(length(unique(trait.dat)) <= 2) {
+            if(length(unique(trait.dat)) < 2) {
+              warning(paste0("There is only one value in ", trait.list[k], " with drug assignment value of ", drug.list[d]))
+            }
+            type <- "binary"
+            trait.dat <- as.factor(trait.dat)
+            levels(trait.dat) <- c(0, 1)[1:length(unique(trait.dat))]
+            trait.dat <- as.numeric(as.character(trait.dat))
+          }else if(length(status.ind) == 1){
+            type <- "survival"
+          }else{
+            type <- "continuous"
+          }
+
+          geno.dat <- subset$genotype[valid.id, ]
+          cov.dat <- model.matrix(trait.dat ~ as.matrix(subset$covariates[valid.id, 1:L, drop = FALSE]))
+
+          if(type == "binary") {
+            # use fastSPA package
+            SPA.ret <- SPAtest::ScoreTest_SPA_wMeta(genos = t(geno.dat), pheno = trait.dat, cov = cov.dat, method = "fastSPA", output = "metaZ")
+
+            Z <- sign(SPA.ret$p.value) * qnorm(abs(SPA.ret$p.value)/2, lower.tail = FALSE)
+          }else{
+            Z <- (sumstats[[d]][[k]]$U/sqrt(diag(sumstats[[d]][[k]]$V)))[selSNP]
+          }
+          # else if(type == "survival") {
+          #   # use SPACox package
+          #   surv.dat <- data.frame(Time = trait.dat, status = subset$status[valid.id, status.ind], subset$covariates[valid.id, -3])
+          #   colnames(surv.dat) <- c("Time", "status", "cov1", "cov2")
+          #
+          #   ### using SPACox to obtain score summary statistics for each variant
+          #   Phen.mtx <- cbind(ID = paste0("IID-",1:nrow(geno.dat)), surv.dat)
+          #   Geno.mtx <- geno.dat
+          #   rownames(Geno.mtx) <- paste0("IID-",1:nrow(geno.dat))
+          #   obj.null = SPACox_Null_Model(Surv(Time, status)~cov1+cov2, data=Phen.mtx,
+          #                                pIDs=Phen.mtx$ID, gIDs=rownames(Geno.mtx))
+          #   SPACox.res = SPACox(obj.null, Geno.mtx)
+          #   Z <- sign(SPACox.res[, 5]) * qnorm(abs(SPACox.res[, 3])/2, lower.tail =F)
+          # }
+
+          names(Z) <- snp.list
+          obs.stat.bydrug[[k]] <- Z
+        }
+        names(obs.stat.bydrug) <- trait.list
+        obs.stat.SPA[[d]] <- obs.stat.bydrug
+        # names(obs.stat.SPA) <- paste0("Drug", drug.list)
+      }
+      # rownames(MAC.perSNP) <- paste0("Drug", drug.list)
+
+    }
+
+    for(snp.id in 1:length(selSNP)) {
+
+      U.comb <- V.comb <- list()
+      for(k in 1:K) {
+        if(way == 1) {
+          # U equals to Z*sqrt(V)
+          U.temp <- obs.stat.SPA[[1]][[k]][snp.id] *
+            sqrt( sumstats[[1]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE])
+          V.temp <- sumstats[[1]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE]
+        }else if(way == 2){
+          # U equals to Z
+          U.temp <- obs.stat.SPA[[1]][[k]][snp.id]
+          V.temp <- 1
+        }else if(way == 3){
+          # U equals to U, V equals to (U/Z)^2
+          U.temp <- sumstats[[1]][[k]]$U[selSNP[snp.id]]
+          V.temp <- (sumstats[[1]][[k]]$U[selSNP[snp.id]]/
+                       obs.stat.SPA[[1]][[k]][snp.id])^2
+        }else{
+          # U equals to U and V equals to V, no SPA
+          U.temp <- sumstats[[1]][[k]]$U[selSNP[snp.id]]
+          V.temp <- sumstats[[1]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE]
+        }
+
+        for(d in 2:D) {
+          if(way == 1) {
+            U.temp <- U.temp + obs.stat.SPA[[d]][[k]][snp.id] *
+              sqrt(sumstats[[d]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE])
+            V.temp <- V.temp + sumstats[[d]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE]
+          }else if (way == 2){
+            U.temp <- U.temp + obs.stat.SPA[[d]][[k]][snp.id]
+            V.temp <- V.temp + 1
+          }else if(way == 3){
+            U.temp <- U.temp + sumstats[[d]][[k]]$U[selSNP[snp.id]]
+            V.temp <- V.temp + (sumstats[[d]][[k]]$U[selSNP[snp.id]]/obs.stat.SPA[[d]][[k]][snp.id])^2
+          }else{
+            ## dont apply SPA adjust
+            U.temp <- U.temp + sumstats[[d]][[k]]$U[selSNP[snp.id]]
+            V.temp <- V.temp + sumstats[[d]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE]
+          }
+        }
+
+        U.comb[[k]] <- U.temp
+        V.comb[[k]] <- V.temp
+      }
+
+      sumstats.perSNP <- sumstats.perSNP.joint <- list()
+      for(d in 1:D) {
+
+        sumstats.perSNP.tmp <- list()
+        for(k in 1:K) {
+          if(way == 1) {
+            sumstats.perSNP.tmp[[k]] <- list(U = obs.stat.SPA[[d]][[k]][snp.id] *
+                                               sqrt(sumstats[[d]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE]),
+                                             V = sumstats[[d]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE])
+          }else if(way == 2){
+            sumstats.perSNP.tmp[[k]] <- list(U = obs.stat.SPA[[d]][[k]][snp.id],V = 1)
+          }else if(way == 3){
+            sumstats.perSNP.tmp[[k]] <- list(U = sumstats[[d]][[k]]$U[selSNP[snp.id]],
+                                             V = (sumstats[[d]][[k]]$U[selSNP[snp.id]]/
+                                                    obs.stat.SPA[[d]][[k]][snp.id])^2)
+          }else{
+            sumstats.perSNP.tmp[[k]] <- list(U = sumstats[[d]][[k]]$U[selSNP[snp.id]],
+                                             V = sumstats[[d]][[k]]$V[selSNP[snp.id], selSNP[snp.id], drop = FALSE])
+          }
+
+        }
+        sumstats.perSNP[[d]] <- sumstats.perSNP.tmp
+        sumstats.perSNP.joint[[d]] <- sumstats.perSNP.tmp
+
+        if(MACadj) {
+          if(MAC.perSNP[d, snp.id] != 1) {
+
+            # if MAC < 10, dont use the corresponding sumstats in the joint analysis
+            sumstats.perSNP.joint[[d]] <- list()
+            for(k in 1:K) {
+              sumstats.perSNP.joint[[d]][[k]] <- list(U = 0, V = 0)
+            }
+
+          }
+        }
+      }
+
+      combMTAR.p <- try(MTAR.main.variant(U = U.comb, V = V.comb, MAF = MAF[selSNP[snp.id]], R.C = 1,
+                                          snp.list = names(selSNP)[snp.id],
+                                          # diagTrans = TRUE,
+                                          cct = TRUE, KA = KA, zeta = zeta,
+                                          diffweight = FALSE, weight.SNP = NULL)$p, silent = T)
+      singletrait.p <- list()
+      for(k in 1:K){
+
+        singletrait.tmp <- try(MTAR.main.variant(U = list(U.comb[[k]]), V = list(V.comb[[k]]),
+                                                 MAF = MAF[selSNP[snp.id]],
+                                                 R.C = 1, snp.list = names(selSNP)[snp.id],
+                                                 weight.SNP = NULL,
+                                                 # diagTrans = TRUE,
+                                                 rho.trait = 1,
+                                                 KA = matrix(1), zeta = matrix(1),
+                                                 cct = TRUE, diffweight = FALSE)$p, silent = T)
+        singletrait.p[[k]] <- singletrait.tmp
+      }
+
+      if(inherits(combMTAR.p, "try-error")|
+         any(sapply(singletrait.p, function(x) inherits(x, "try-error")))){
+        pval.main <- rbind(pval.main, rep(NA, 4))
+      }else{
+        pval.main <- rbind(pval.main, c(combMTAR.p, unlist(singletrait.p)))
+      }
+
+      if(sum(MAC.perSNP[, snp.id])==0) {
+        pval.joint <- rbind(pval.joint, rep(NA, 4))
+
+      }else{
+        # joint test #
+        combMTAR.p <- try(MAGENTA.joint.variant(sumstats = sumstats.perSNP.joint,
+                                                 MAF = MAF[selSNP[snp.id]],
+                                                 R.C = 1, weight.SNP = NULL,
+                                                 KA = KA,
+                                                 # diagTrans = TRUE,
+                                                 zeta = zeta.list, drugStruct = "AR1",
+                                                 rho.drug = c(0, 0.5, 1), cct = TRUE,
+                                                 diffweight = FALSE)$p,silent = T)
+
+        sumstats.bytrait.joint <- list()
+        zeta.list1 <- list()
+        for(k in 1:K) {
+          sumstats.bytrait.tmp <- list()
+          for(d in 1:D) {
+            zeta.list1[[d]] <- matrix(1)
+            sumstats.bytrait.tmp[[d]] <- list(list(U = sumstats.perSNP.joint[[d]][[k]]$U,
+                                                   V = sumstats.perSNP.joint[[d]][[k]]$V))
+          }
+          sumstats.bytrait.joint[[k]] <- sumstats.bytrait.tmp
+        }
+
+        singletrait.p <- list()
+        for(k in 1:K){
+          singletrait.tmp <-
+            try(MAGENTA.joint.variant(sumstats = sumstats.bytrait.joint[[k]],
+                                       MAF = MAF[selSNP[snp.id]], KA = matrix(1),
+                                       # diagTrans = TRUE,
+                                       weight.SNP = NULL,
+                                       R.C = 1, zeta = zeta.list1,
+                                       drugStruct = "AR1",
+                                       rho.drug = c(0, 0.5, 1), cct = TRUE,
+                                       rho.trait = 1,
+                                       diffweight = FALSE)$p, silent = T)
+
+          singletrait.p[[k]] <- singletrait.tmp
+        }
+        if(inherits(combMTAR.p, "try-error")|
+           any(sapply(singletrait.p, function(x) inherits(x, "try-error")))){
+          pval.joint <- rbind(pval.joint, rep(NA, 4))
+
+        }else{
+          pval.joint <- rbind(pval.joint, c(combMTAR.p, unlist(singletrait.p)))
+
+        }
+      }
+
+
+      if(sum(MAC.perSNP[, snp.id]) != D) {
+        pval.GEI <- rbind(pval.GEI, rep(NA, 4))
+      }else{
+        # if SNP has MAC > MAC.thres across all the groups, conduct MAGENTA GEI test
+        ## interaction effect test start ##
+        combMTAR.p <-try(MAGENTA.GEI.way1(sumstats = sumstats.perSNP.joint,
+                                                       MAF = MAF[selSNP[snp.id]], KA = KA,
+                                                       # diagTrans = TRUE,
+                                                       R.C = 1, zeta = zeta.GE, drugStruct = "AR1",
+                                                       weight.SNP = NULL,
+                                                       rho.drug = c(0, 0.5, 1), cct = TRUE,
+                                                       diffweight = FALSE)$p,silent = T)
+        # singletrait.p <- list()
+        singletrait.p <- list()
+        for(k in 1:K){
+          singletrait.tmp <-
+            try(MAGENTA.GEI.way1(sumstats = sumstats.bytrait.joint[[k]],
+                                              MAF = MAF[selSNP[snp.id]], KA = matrix(1),
+                                              # diagTrans = TRUE,
+                                              R.C = 1,weight.SNP = NULL,
+                                              zeta = zeta.GE1, drugStruct = "AR1",
+                                              rho.drug = c(0, 0.5, 1), cct = TRUE,
+                                              rho.trait = 1,
+                                              diffweight = FALSE)$p, silent = T)
+
+          singletrait.p[[k]] <- singletrait.tmp
+        }
+
+        if(inherits(combMTAR.p, "try-error")|
+           any(sapply(singletrait.p, function(x) inherits(x, "try-error")))){
+          pval.GEI <- rbind(pval.GEI, rep(NA, 4))
+
+
+        }else{
+          pval.GEI <- rbind(pval.GEI, c(combMTAR.p, unlist(singletrait.p)))
+
+        }
+      }
+
+    }
+  }
+
+  main.perSNP <- cbind(pval.Multi = paste(as.vector(pval.main[, 1]), collapse = ":"),
+                       pval.Single = paste(as.vector(pval.main[, 2:(K + 1)]), collapse = ":"))
+  joint.perSNP <- cbind(pval.Multi = paste(as.vector(pval.joint[, 1]), collapse = ":"),
+                        pval.Single = paste(as.vector(pval.joint[, 2:(K + 1)]), collapse = ":"))
+  GEI.perSNP <- cbind(pval.Multi = paste(as.vector(pval.GEI[, 1]), collapse = ":"),
+                      pval.Single = paste(as.vector(pval.GEI[, 2:(K + 1)]), collapse = ":"))
+  pval <- list(main = main.perSNP, joint = joint.perSNP, GEI = GEI.perSNP)
+  return(pval)
+}
+
+
+variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test) {
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
   zeta <- zeta.ret$zeta.main
   zeta.list <- zeta.ret$zeta.joint
   zeta.GE <- zeta.ret$zeta.GE
@@ -1287,6 +1705,7 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
       for(d in 1:D) {
         sumstats.perSNP.tmp <- list()
         for(k in 1:K) {
+<<<<<<< HEAD
 
           if(SPA) {
             sumstats.perSNP.tmp[[k]] <- list(U = sumstats[[d]][[k]]$U[MAC10[snp.id]],
@@ -1295,6 +1714,10 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
             sumstats.perSNP.tmp[[k]] <- list(U = sumstats[[d]][[k]]$U[MAC10[snp.id]],
                                              V = sumstats[[d]][[k]]$V[MAC10[snp.id], MAC10[snp.id], drop = FALSE])
           }
+=======
+          sumstats.perSNP.tmp[[k]] <- list(U = sumstats[[d]][[k]]$U[MAC10[snp.id]],
+                                           V = sumstats[[d]][[k]]$V[MAC10[snp.id], MAC10[snp.id], drop = FALSE])
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
         }
         sumstats.perSNP[[d]] <- sumstats.perSNP.tmp
       }
@@ -1401,7 +1824,10 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
                                           diffweight = FALSE)$p,silent = T)
         # singletrait.p <- list()
         singletrait.p <- list()
+<<<<<<< HEAD
         zeta.GE1 <- diag(D)
+=======
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
         for(k in 1:K){
           singletrait.tmp <-
             try(MAGENTA.GEI.way1(sumstats = sumstats.bytrait[[k]], MAF = MAF[MAC10[snp.id]], KA = matrix(1),
@@ -1454,6 +1880,7 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
   return(pval)
 }
 
+<<<<<<< HEAD
 SPA_MAGENTA.sumstats <- function(genotype, simdata, selSNP, sumstats, MAC.thres = 10){
   genotype <- genotype[, colnames(genotype) %in% selSNP, drop = FALSE]
   drug.list <- unique(simdata$covariates[, 3])
@@ -1592,3 +2019,5 @@ SPA_MAGENTA.sumstats <- function(genotype, simdata, selSNP, sumstats, MAC.thres 
   return(sumstats.SPA)
 }
 
+=======
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1

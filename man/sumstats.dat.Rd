@@ -3,6 +3,7 @@
 \docType{data}
 \name{sumstats.dat}
 \alias{sumstats.dat}
+<<<<<<< HEAD
 \title{Example2: the score summary statistics and their variance for continuous traits}
 \format{A list with 3 sublists:
 \describe{
@@ -13,6 +14,12 @@
 \item{KA}{a \eqn{K \times K} matrix of genetic correlation matrix for \eqn{K} traits}}}
 \usage{
 sumstats.dat
+=======
+\title{Example2: the score summary statistics and their variance}
+\format{An object of class \code{list} of length 7.}
+\usage{
+data(sumstats.dat)
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 }
 \description{
 An example of calculating summary statistics in MAGENTA given the score summary statistics U and its variance V.

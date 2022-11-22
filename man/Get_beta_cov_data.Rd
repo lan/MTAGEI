@@ -16,8 +16,11 @@ Get_beta_cov_data(dat, geno.dat, cov.list, env, ID = "ID", SNP.list,
 
 \item{env}{which column represents the environmental variable}
 
+<<<<<<< HEAD
 \item{ID}{indicator which column is unique subject ID}
 
+=======
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 \item{SNP.list}{a vector containing the SNPs}
 
 \item{stats}{Use the score summary statistics or wald summary statistics. Default is "score".}
@@ -25,6 +28,11 @@ Get_beta_cov_data(dat, geno.dat, cov.list, env, ID = "ID", SNP.list,
 \item{trait.list}{a vector containing the traits}
 
 \item{type}{type of the traits data.}
+<<<<<<< HEAD
+=======
+
+\item{test}{if set to "joint", the function will conduct joint test; if set to "GEI", the function will return GEI p value}
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 }
 \value{
 summary statistics (beta, beta.cov) required by MAGENTA

@@ -17,12 +17,22 @@ Imports:
     stats,
     utils,
     gtools (>= 3.8.1),
+<<<<<<< HEAD
     survival (>= 3.2-3),
     SKAT (>= 1.3.2.1),
     expm (>= 0.999-4),
     CompQuadForm (>= 1.4.3),
     stringr (>= 1.4.0),
     SPAtest (>= 3.0.0)
+=======
+    SPAtest (>= 3.0.0),
+    survival (>= 3.2-3),
+    SimCorMultRes (>= 1.7.0),
+    SKAT (>= 1.3.2.1),
+    expm (>= 0.999-4),
+    CompQuadForm (>= 1.4.3),
+    stringr (>= 1.4.0)
+>>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 Suggests: 
     knitr,
     rmarkdown
