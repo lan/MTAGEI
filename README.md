@@ -80,7 +80,7 @@ versions of software are, specifically:
 Demo
 ----
 
-Detailed instructions can be found in Vignetts/MAGENTA.html file.
+Detailed instructions can be found in Vignetts/MAGENTA.html file or via [this link](https://htmlpreview.github.io/?https://github.com/lan/MAGENTA/blob/master/vignettes/MAGENTA.html)
 
 URLs
 ----
