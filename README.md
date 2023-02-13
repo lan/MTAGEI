@@ -19,7 +19,7 @@ to test the interaction between a gene and environmental groups on
 multiple traits in large-scale datasets, such as the UK Biobank. More
 details about MAGENTA can be found in Luo et al (2022).
 
-Specifically, `MAGENTA` package has functions to
+Specifically, `MTAGEI` package has functions to
 
 -   compute the summary statistics with different types of data input
     adjusting for the potential overlapping samples under different
@@ -31,7 +31,7 @@ Specifically, `MAGENTA` package has functions to
 ![](%22workflow.png%22) <img
   src="workflow.png"
   alt="Fig 1"
-  title="An overview of MAGENTA workflow. Light blue rectangle represents necessary input. Dark blue rectangle denotes the final output of MAGENTA function. Gray rectangle denotes the intermediate parameters."
+  title="An overview of MTAGEI workflow. Light blue rectangle represents necessary input. Dark blue rectangle denotes the final output of MTAGEI function. Gray rectangle denotes the intermediate parameters."
   style="display: inline-block; margin: 0 auto; max-width: 300px">
 
 System Requirements
@@ -49,16 +49,16 @@ systems.
 Installing Guide
 ----------------
 
-`MAGENTA` package requires R with version 3.6.1 or higher, which can be
-downloaded and installed from [Github](https://github.com/lan/MAGENTA).
+`MTAGEI` package requires R with version 3.6.1 or higher, which can be
+downloaded and installed from [Github](https://github.com/lan/MTAGEI).
 
-    install.packages("MAGENTA.tar.gz", repos = NULL, type = "source")
+    install.packages("MTAGEI.tar.gz", repos = NULL, type = "source")
 
 ### Package dependencies
 
-`MAGENTA` package depends on several R packages, which will be
-downloaded before installing `MAGENTA`. `MAGENTA` also uses non-exported
-R code from R packages `ACAT` and `SKAT`. The `MAGENTA` package
+`MTAGEI` package depends on several R packages, which will be
+downloaded before installing `MTAGEI`. `MTAGEI` also uses non-exported
+R code from R packages `ACAT` and `SKAT`. The `MTAGEI` package
 functions with all packages in their versions as they appear on `CRAN`
 or `github` on January 23, 2020 and October 28, 2021, respectively. The
 versions of software are, specifically:
@@ -80,7 +80,7 @@ versions of software are, specifically:
 Demo
 ----
 
-Detailed instructions can be found in Vignetts/MAGENTA.html file.
+Detailed instructions can be found in Vignetts/MTAGEI.html file.
 
 URLs
 ----
