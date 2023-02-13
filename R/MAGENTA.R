@@ -155,7 +155,6 @@ MAGENTA.eq4.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
       }
     }
   }
-<<<<<<< HEAD
   if(cct) {
     p.obs <- p.obs[which(p.obs < 1)]
     if(length(p.obs) == 0){
@@ -169,20 +168,6 @@ MAGENTA.eq4.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
                         rhoS.min = lambda[which.min(p.obs), 2],
                         rhoT.min = lambda[which.min(p.obs), 1],
                         rhoE.min = lambda[which.min(p.obs), 3])
-=======
-
-  if(cct) {
-    MAGENTA.cct.p <- list(p = ACAT(p.obs[which(p.obs < 1)]),
-                          rhoS.min = lambda[which.min(p.obs), 2],
-                          rhoT.min = lambda[which.min(p.obs), 1],
-                          rhoE.min = lambda[which.min(p.obs), 3])
-  }else{
-    MAGENTA.cct.p <- list(p = p.obs,
-                          rhoS.min = lambda[which.min(p.obs), 2],
-                          rhoT.min = lambda[which.min(p.obs), 1],
-                          rhoE.min = lambda[which.min(p.obs), 3])
-  }
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 
   return(MAGENTA.cct.p)
 }
@@ -204,16 +189,10 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
   snp.list <- names(MAF)
   drug_trait <- expand.grid(trait = 1:K, drug = 1:D)
 
-<<<<<<< HEAD
   SPA <- ifelse(is.null(beta.sumstats.obj$SPA.ret), FALSE, TRUE)
   if(test == "joint") {
     ## MTMV p value
     MTMV.p <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.obj$noSPA.ret,
-=======
-  if(test == "joint") {
-    ## MTMV p value
-    MTMV.p <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.obj,
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                                        MAF = MAF, test = test, ref = ref,
                                        KA = KA, R.C = R.C,
                                        drugStruct = drugStruct,
@@ -230,15 +209,9 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
     ## STMV p value
     STMV.p <- rep(NA, K)
     for(k in 1:K){
-<<<<<<< HEAD
       SNP.range <- grep( paste0(":", k, ":"), rownames(beta.sumstats.obj$noSPA.ret$beta.est))
       beta.sumstats.STMV <- list(beta.est = beta.sumstats.obj$noSPA.ret$beta.est[SNP.range, , drop = FALSE],
                                  beta.cov = beta.sumstats.obj$noSPA.ret$beta.cov[SNP.range, SNP.range, drop = FALSE])
-=======
-      SNP.range <- grep( paste0(":", k, ":"), rownames(beta.sumstats.obj$beta.est))
-      beta.sumstats.STMV <- list(beta.est = beta.sumstats.obj$beta.est[SNP.range, , drop = FALSE],
-                                 beta.cov = beta.sumstats.obj$beta.cov[SNP.range, SNP.range, drop = FALSE])
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
       STMV.p[k] <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.STMV,
                                             MAF = MAF,
                                             KA = matrix(1),
@@ -279,7 +252,6 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
       MTSV.p <- rep(NA, length(MAC10.bygrp))
       STSV.p <- matrix(NA, length(MAC10.bygrp), K)
       for(SNP.id in 1:length(MAC10.bygrp)) {
-<<<<<<< HEAD
         if(SPA) {
           ## use SPA-adjusted summary statistics
           ## MTSV p value
@@ -367,50 +339,6 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
             )$p, silent = T)
           }
         }
-=======
-        ## MTSV p value
-        SNP.range <- grep(paste0(MAC10.bygrp[SNP.id], ":"), rownames(beta.sumstats.obj$beta.est))
-        beta.sumstats.MTSV <- list(beta.est = beta.sumstats.obj$beta.est[SNP.range, , drop = FALSE],
-                                   beta.cov = beta.sumstats.obj$beta.cov[SNP.range, SNP.range, drop = FALSE])
-        MTSV.p[SNP.id] <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.MTSV,
-                                                   MAF = MAF[names(MAF) == MAC10.bygrp[SNP.id]],
-                                                   KA = KA,test = test, ref = ref,
-                                                   R.C = R.C[rownames(R.C) == MAC10.bygrp[SNP.id],
-                                                             colnames(R.C) == MAC10.bygrp[SNP.id], drop = FALSE],
-                                                   drugStruct = drugStruct,
-                                                   trait.list = trait.list,
-                                                   drug.list = drug.list,
-                                                   cct = cct,
-                                                   diffweight = diffweight,
-                                                   threshold = threshold,
-                                                   weight.commonSNP = weight.commonSNP,
-                                                   rho.SNP = 1, rho.trait = rho.trait,
-                                                   rho.drug = rho.drug, weight.SNP = weight.SNP
-        )$p, silent = T)
-
-        ## STSV p value
-        for(k in 1:K) {
-          SNP.range <- grep(paste0(MAC10.bygrp[SNP.id], ":", k, ":"), rownames(beta.sumstats.obj$beta.est))
-          beta.sumstats.STSV <- list(beta.est = beta.sumstats.obj$beta.est[SNP.range, , drop = FALSE],
-                                     beta.cov = beta.sumstats.obj$beta.cov[SNP.range, SNP.range, drop = FALSE])
-          STSV.p[SNP.id, k] <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.STSV,
-                                                        MAF =  MAF[names(MAF) == MAC10.bygrp[SNP.id]],
-                                                        KA = matrix(1),test = test, ref = ref,
-                                                        R.C = R.C[rownames(R.C) == MAC10.bygrp[SNP.id],
-                                                                  colnames(R.C) == MAC10.bygrp[SNP.id], drop = FALSE],
-                                                        drugStruct = drugStruct,
-                                                        trait.list = trait.list[k],
-                                                        drug.list = drug.list,
-                                                        cct = cct,
-                                                        diffweight = diffweight,
-                                                        threshold = threshold,
-                                                        weight.commonSNP = weight.commonSNP,
-                                                        rho.SNP = 1, rho.trait = 1,
-                                                        rho.drug = rho.drug, weight.SNP = weight.SNP
-          )$p, silent = T)
-        }
-
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
       }
       names(MTSV.p) <- MAC10.bygrp
       rownames(STSV.p) <- MAC10.bygrp
@@ -423,11 +351,7 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
     trait.grid <- expand.grid(trait1 = 1:K, trait2 = 1:K)
 
     ## MTMV p value
-<<<<<<< HEAD
     MTMV.p <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.obj$noSPA.ret,
-=======
-    MTMV.p <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.obj,
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                                        MAF = MAF, test = test, ref = ref,
                                        KA = KA, R.C = R.C,
                                        drugStruct = drugStruct,
@@ -444,19 +368,11 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
     ## STMV p value
     STMV.p <- rep(NA, K)
     for(k in 1:K){
-<<<<<<< HEAD
       SNP.range <- grep( paste0(":", k, ":"), names(beta.sumstats.obj$noSPA.ret$delta))
       beta.sumstats.STMV <- list(delta = beta.sumstats.obj$noSPA.ret$delta[SNP.range],
                                  Sigma.delta = beta.sumstats.obj$noSPA.ret$Sigma.delta[SNP.range, SNP.range, drop = FALSE],
                                  obs.stat = sapply(beta.sumstats.obj$noSPA.ret$obs.stat, function(x) x[k], simplify = FALSE),
                                  nonpoly.list = beta.sumstats.obj$noSPA.ret$nonpoly.list[k])
-=======
-      SNP.range <- grep( paste0(":", k, ":"), names(beta.sumstats.obj$delta))
-      beta.sumstats.STMV <- list(delta = beta.sumstats.obj$delta[SNP.range],
-                                 Sigma.delta = beta.sumstats.obj$Sigma.delta[SNP.range, SNP.range, drop = FALSE],
-                                 obs.stat = sapply(beta.sumstats.obj$obs.stat, function(x) x[k], simplify = FALSE),
-                                 nonpoly.list = beta.sumstats.obj$nonpoly.list[k])
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
       STMV.p[k] <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.STMV,
                                             MAF = MAF,
                                             KA = matrix(1),
@@ -496,7 +412,6 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
       MTSV.p <- rep(NA, length(MAC10.bygrp))
       STSV.p <- matrix(NA, length(MAC10.bygrp), K)
       for(SNP.id in 1:length(MAC10.bygrp)) {
-<<<<<<< HEAD
         if(SPA) {
           beta.sumstats.perSNP <- beta.sumstats.obj$SPA.ret[[which(names(beta.sumstats.obj$SPA.ret) == MAC10.bygrp[SNP.id])]]
           ## MTSV p value
@@ -599,62 +514,7 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                           rho.drug = rho.drug, weight.SNP = weight.SNP
             )$p, silent = T)
           }
-=======
-        ## MTSV p value
-        obs.stat.SV <- list()
-        for(d in 1:D) {
-          obs.stat.SV.tmp <- list()
-          for(k in 1:K) {
-            obs.stat.SV.tmp[[k]] <- list(U = beta.sumstats.obj$obs.stat[[d]][[k]]$U[names(beta.sumstats.obj$obs.stat[[d]][[k]]$U) == MAC10.bygrp[SNP.id]],
-                                    V = beta.sumstats.obj$obs.stat[[d]][[k]]$V[names(beta.sumstats.obj$obs.stat[[d]][[k]]$U) == MAC10.bygrp[SNP.id],
-                                                                               names(beta.sumstats.obj$obs.stat[[d]][[k]]$U) == MAC10.bygrp[SNP.id], drop = FALSE])
-          }
-          obs.stat.SV[[d]] <- obs.stat.SV.tmp
-        }
-        SNP.range <- grep(paste0(MAC10.bygrp[SNP.id], ":"), names(beta.sumstats.obj$delta))
-        beta.sumstats.MTSV <- list(delta = beta.sumstats.obj$delta[SNP.range],
-                                   Sigma.delta = beta.sumstats.obj$Sigma.delta[SNP.range, SNP.range, drop = FALSE],
-                                   obs.stat = obs.stat.SV,
-                                   nonpoly.list = beta.sumstats.obj$nonpoly.list)
-        MTSV.p[SNP.id] <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.MTSV,
-                                                   MAF = MAF[names(MAF) == MAC10.bygrp[SNP.id]],
-                                                   KA = KA,test = test, ref = ref,
-                                                   R.C = R.C[rownames(R.C) == MAC10.bygrp[SNP.id],
-                                                             colnames(R.C) == MAC10.bygrp[SNP.id], drop = FALSE],
-                                                   drugStruct = drugStruct,
-                                                   trait.list = trait.list,
-                                                   drug.list = drug.list,
-                                                   cct = cct,
-                                                   diffweight = diffweight,
-                                                   threshold = threshold,
-                                                   weight.commonSNP = weight.commonSNP,
-                                                   rho.SNP = 1, rho.trait = rho.trait,
-                                                   rho.drug = rho.drug, weight.SNP = weight.SNP
-        )$p, silent = T)
 
-        ## STSV p value
-        for(k in 1:K) {
-          SNP.range <- grep(paste0(MAC10.bygrp[SNP.id], ":", k, ":"), names(beta.sumstats.obj$delta))
-          beta.sumstats.STSV <- list(delta = beta.sumstats.obj$delta[SNP.range],
-                                     Sigma.delta = beta.sumstats.obj$Sigma.delta[SNP.range, SNP.range, drop = FALSE],
-                                     obs.stat = sapply(obs.stat.SV, function(x) x[k], simplify = FALSE),
-                                     nonpoly.list = beta.sumstats.obj$nonpoly.list[k])
-          STSV.p[SNP.id, k] <- try(MAGENTA.eq4.sumstats(beta.sumstats.obj = beta.sumstats.STSV,
-                                                        MAF =  MAF[names(MAF) == MAC10.bygrp[SNP.id]],
-                                                        KA = matrix(1),test = test, ref = ref,
-                                                        R.C = R.C[rownames(R.C) == MAC10.bygrp[SNP.id],
-                                                                  colnames(R.C) == MAC10.bygrp[SNP.id], drop = FALSE],
-                                                        drugStruct = drugStruct,
-                                                        trait.list = trait.list[k],
-                                                        drug.list = drug.list,
-                                                        cct = cct,
-                                                        diffweight = diffweight,
-                                                        threshold = threshold,
-                                                        weight.commonSNP = weight.commonSNP,
-                                                        rho.SNP = 1, rho.trait = 1,
-                                                        rho.drug = rho.drug, weight.SNP = weight.SNP
-          )$p, silent = T)
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
         }
 
       }
@@ -1130,7 +990,6 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
       }
     }
   }
-<<<<<<< HEAD
   if(cct) {
     p.obs <- p.obs[which(p.obs < 1)]
     if(length(p.obs) == 0){
@@ -1142,14 +1001,7 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
   }
 
   MTAR.cct.p <- p.obs
-=======
 
-  if(cct) {
-    MTAR.cct.p <- ACAT(p.obs[which(p.obs < 1)])
-  }else{
-    MTAR.cct.p <- p.obs
-  }
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
   return(MTAR.cct.p)
 }
 
@@ -1182,10 +1034,7 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
 #' @export
 #' @examples
 #' \donttest{
-<<<<<<< HEAD
 #' #### start from individual-level data
-=======
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 #'#' data(rawdata)
 #' names(rawdata)
 #' attach(rawdata)
@@ -1212,7 +1061,6 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
 #'  trait.list = trait.list,
 #'   drug.list = drug.list)
 #' detach(rawdata)
-<<<<<<< HEAD
 #'
 #' #### start from score summary statistics
 #' data(sumstats.dat)
@@ -1234,8 +1082,6 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
 #'         trait.list = trait.list,
 #'         drug.list = drug.list)
 #' detach(sumstats.dat)
-=======
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 #' }
 MAGENTA <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
                     trait.list, drug.list,output = "omnibus",MAF.thres = NULL,

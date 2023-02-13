@@ -27,14 +27,14 @@ library(MAGENTA)
 
 
 ## Overview 
-Studying genotype-by-environment interaction (GEI) is fundamental in understanding complex trait variations. Identifying genetic variants with GEI effects is challenging because the GEI analysis generally has low power. MAGENTA (Multi-trait Analysis of Gene-ENvironmenT-wide Association) is a powerful, robust, and computationally efficient method to test the interaction between a gene and environmental groups on multiple traits in large-scale datasets, such as the UK Biobank. More details about MAGENTA can be found in @luo2022magenta.
+Studying genotype-by-environment interaction (GEI) is fundamental in understanding complex trait variations. Identifying genetic variants with GEI effects is challenging because the GEI analysis generally has low power. MTAGEI (Multi-trait Analysis of Gene-ENvironmenT-wide Association) is a powerful, robust, and computationally efficient method to test the interaction between a gene and environmental groups on multiple traits in large-scale datasets, such as the UK Biobank. More details about MTAGEI can be found in @luo2023MTAGEI.
 
-Specifically, `MAGENTA` package has functions to 
+Specifically, `MTAGEI` package has functions to 
 
 - compute the summary statistics with different types of data input adjusting for the potential overlapping samples under different assumption of genetic marginal effects; and 
 - perform summary-statistics-based multi-trait analysis of gene-environment interaction (GEI) tests or genetic main effect and GEI joint effect for both common and rare variants.
 
-```{r, out.width = "650px", echo=FALSE, fig.cap="Fig 1: An overview of MAGENTA workflow. Light blue rectangle represents necessary input. Dark blue rectangle denotes the final output of MAGENTA function. Gray rectangle denotes the intermediate parameters."}
+```{r, out.width = "650px", echo=FALSE, fig.cap="Fig 1: An overview of MTAGEI workflow. Light blue rectangle represents necessary input. Dark blue rectangle denotes the final output of MTAGEI function. Gray rectangle denotes the intermediate parameters."}
 knitr::include_graphics("workflow.png")
 ```
 
@@ -49,15 +49,15 @@ Windows 10 (R version 3.6.1)
 The CRAN package should be compatible with Windows and Mac operating systems.
 
 ## Installing Guide
-`MAGENTA` package requires R with version 3.6.1 or higher, which can be downloaded and installed from [Github](https://github.com/lan/MAGENTA). 
+`MTAGEI` package requires R with version 3.6.1 or higher, which can be downloaded and installed from [Github](https://github.com/lan/MTAGEI). 
 
 ```
-install.packages("MAGENTA.tar.gz", repos = NULL, type = "source")
+install.packages("MTAGEI.tar.gz", repos = NULL, type = "source")
 ```
 
 ### Package dependencies
 
-`MAGENTA` package depends on several R packages, which will be downloaded before installing `MAGENTA`. `MAGENTA` also uses non-exported R code from R packages `ACAT` and `SKAT`. The `MAGENTA` package functions with all packages in their  versions as they appear on `CRAN` or `github` on January 23, 2020 and October 28, 2021, respectively. The versions of software are, specifically:
+`MTAGEI` package depends on several R packages, which will be downloaded before installing `MTAGEI`. `MTAGEI` also uses non-exported R code from R packages `ACAT` and `SKAT`. The `MTAGEI` package functions with all packages in their  versions as they appear on `CRAN` or `github` on January 23, 2020 and October 28, 2021, respectively. The versions of software are, specifically:
 
 ```
 MASS (>= 7.3-51.4),
@@ -82,7 +82,7 @@ Suppose we are interested in testing the GEI effect on $K$ traits. Under each en
 We first obtain the variant-level score statistics $\mathbf{U}_k$ for testing the genetic effect $\mathbf{\beta}_k = 0$ and its variance-covariance estimate $\mathbf{V}_k$. The calculation of the score statistics is computationally efficient as it fits a genotype-independent regression model (i.e., $\mathbf{\beta}_k = 0$) only once in the genome-wide analysis. We estimate the genetic effect as $\mathbf{\hat{\beta}}_k = \mathbf{V}_k^{-1}\mathbf{U}_k$. This estimate is numerically stable and accurate and has been commonly employed in the genetic association analysis of sequencing studies and shared in public domains
 The variant-level score statistics $\mathbf{U}_k$ for testing the genetic effect $\mathbf{\beta}_k = 0$ and its variance-covariance estimate $\mathbf{V}_k$ are routinely used to construct the marginal effect estimates $\widehat{\mathbf{\beta}}_k = \mathbf{V}^{-1}_k\mathbf{U}_k$.
 
-MAGENTA introduces below two approaches of estimating $\text{cov}(\widehat{\mathbf{\beta}}_k, \widehat{\mathbf{\beta}}_{k'})$. One approach needs individual-level data of all traits but can accurately estimate the correlation induced by the overlapping subjects across trait. The other approach utilizes only the trait-specific summary statistics $\mathbf{U}_k$ and $\mathbf{V}_k$ and is accurate when there are no genetic main effects, which is true under the null hypothesis of main test or joint test, but not necessarily the case under the null hypothesis of GEI test. This apparoch can still provide a reasonable approximation when the main effects are weak but may be inaccurate when the genetic main effects are unusually strong
+MTAGEI introduces below two approaches of estimating $\text{cov}(\widehat{\mathbf{\beta}}_k, \widehat{\mathbf{\beta}}_{k'})$. One approach needs individual-level data of all traits but can accurately estimate the correlation induced by the overlapping subjects across trait. The other approach utilizes only the trait-specific summary statistics $\mathbf{U}_k$ and $\mathbf{V}_k$ and is accurate when there are no genetic main effects, which is true under the null hypothesis of main test or joint test, but not necessarily the case under the null hypothesis of GEI test. This apparoch can still provide a reasonable approximation when the main effects are weak but may be inaccurate when the genetic main effects are unusually strong
 
 #### 1. Input data is individual-level data
 Assume the users provide the individual-level data $\mathbf{Y}$ for traits, $\mathbf{X}$ for covariates, $\mathbf{G}$ for genotype, respectively. Let $\widehat{\mathbf{\theta}}_k = (\widehat{\mathbf{\alpha}}^{\rm T}_k, \widehat{\mathbf{\beta}}^{\rm T}_k)^{\rm T}$ and $\mathbf{Z}_{ik} = (\mathbf{X}^{\rm T}_{ik}, \mathbf{G}^{\rm T}_{ik})^{\rm T}$ with $\widehat{\mathbf{\alpha}}^{\rm T}_k, \widehat{\mathbf{\beta}}^{\rm T}_k$ denoting the estimated regression coefficients for covariates and genotype. Without loss of generality, we organize the data such that the first $n_{kk'}$ subjects are those with measurements on both traits $k$ and $k'$. Then $\text{cov}(\widehat{\mathbf{\theta}}_{k}, \widehat{\mathbf{\theta}}_{k'})$ can be estimated as
@@ -168,9 +168,9 @@ attach(sumstats.dat)
 zeta.ret <- Get_zeta(common.sumstats = common.sumstats, trait.list = paste("Trait", 1:K))
 names(zeta.ret)
 ```
-In the returning object *zeta*, it contains three sublists *zeta.main*, *zeta.joint* and *zeta.GEI*, which captures the correlation between traits for genetic main effect test, joint test and GEI test respectively. In the following analysis, *MAGENTA* function will use the corresponding *zeta* matrix for different type of tests.
+In the returning object *zeta*, it contains three sublists *zeta.main*, *zeta.joint* and *zeta.GEI*, which captures the correlation between traits for genetic main effect test, joint test and GEI test respectively. In the following analysis, *MTAGEI* function will use the corresponding *zeta* matrix for different type of tests.
 
-Given the variant-level score summary statistics and *zeta* matrix, MAGENTA will construct the marginal genetic effect estimates and its variance-covariance matrix. The users need to additionally provide LD correlation matrix among variants *R.C*, the minor allele frequency *MAF*, as well as the genetic correlation matrix *KA*. If users don't provide such a correlation matrix among variants, MAGENTA will try to recover $\mathbf{R}$ from the variance-covariance matrix $V_k^{(d)}, k = 1, \dots, K, d = 1, \dots, D$. 
+Given the variant-level score summary statistics and *zeta* matrix, MTAGEI will construct the marginal genetic effect estimates and its variance-covariance matrix. The users need to additionally provide LD correlation matrix among variants *R.C*, the minor allele frequency *MAF*, as well as the genetic correlation matrix *KA*. If users don't provide such a correlation matrix among variants, MTAGEI will try to recover $\mathbf{R}$ from the variance-covariance matrix $V_k^{(d)}, k = 1, \dots, K, d = 1, \dots, D$. 
 
 If the genetic main effect p value is less than the pre-specified threshold (default is $5\times 10^{-3}$), it will prompt a warning that the estimated GEI p value may be biased. 
 
@@ -184,12 +184,7 @@ beta.sumstats.obj2 <- Get_beta_cov_UV(sumstats.obj = sumstats.dat, MAF = MAF,
 names(beta.sumstats.obj2)
 ```
 
-Similarly, if the users want to analyze $K$ binary traits, the SPA-adjusted summary statistics for the single-variant need to be provided (see *sumstats.dat.bin$sumstats.SPA*), which should contain the SPA-adjusted score summary statistics for each variant. MAGENTA provides a function (*SPA_MAGENTA_sumstats*) to calculate the SPA-adjusted summary statistics, which calls for the *fastSPA* R package for binary traits. Notice that *fastSPA* requires the individual-level data to compute the SPA p-values.
-```{r SPA_MAGENTA, eval = FALSE, echo = TRUE}
-sumstats.SPA <- SPA_MAGENTA.sumstats(genotype = genotype, simdata = simdata, selSNP = names(MAF), sumstats = sumstats)
-```
-
-MAGENTA uses SPA-adjusted summary statistics to conduct the single-variant analysis. In the return objects, SPA.ret is not empty and will be used in *MAGENTA* function.
+For binary traits, MTAGEI uses SPA-adjusted summary statistics to conduct the single-variant analysis. In the return objects, SPA.ret is not empty and will be used in *MTAGEI* function.
 ```{r get_beta_cov_UV_bin, eval = TRUE, echo = TRUE}
 data("sumstats.dat.bin")
 names(sumstats.dat.bin)
@@ -205,12 +200,12 @@ names(beta.sumstats.obj2.bin)
 detach(sumstats.dat.bin)
 ```
 
-### Step 2. Perform joint and GEI tests for common and rare variants (MAGENTA)
-To facilitate the meta-analysis of GEI in large consortium-based studies, MAGENTA translates testing for GEI to testing for heterogeneity of genetic marginal effects across environmental groups and generate summary statistics for marginal effects of multiple variants in the gene on multiple traits of interest. MAGENTA combines these summary statistics and produces a GEI test and a joint test of genetic main and GEI effects. 
+### Step 2. Perform joint and GEI tests for common and rare variants (MTAGEI)
+To facilitate the meta-analysis of GEI in large consortium-based studies, MTAGEI translates testing for GEI to testing for heterogeneity of genetic marginal effects across environmental groups and generate summary statistics for marginal effects of multiple variants in the gene on multiple traits of interest. MTAGEI combines these summary statistics and produces a GEI test and a joint test of genetic main and GEI effects. 
 
-To run MAGENTA function, the returning object from the functions *Get_beta_cov_UV* or *Get_beta_cov_data* is required. Other inputs are optional. The users also need to specify the which test (joint or GEI) given which kind of input data (eq3 is for individual-level data and eq4 is for score summary statistics data). 
+To run MTAGEI function, the returning object from the functions *Get_beta_cov_UV* or *Get_beta_cov_data* is required. Other inputs are optional. The users also need to specify the which test (joint or GEI) given which kind of input data (eq3 is for individual-level data and eq4 is for score summary statistics data). 
 
-```{r MAGENTA, eval = TRUE}
+```{r MTAGEI, eval = TRUE}
 MAGENTA(beta.sumstats.obj = beta.sumstats.obj1,
         test = "joint", way = "eq3",MAF = MAF,
         R.C = R.C, KA = KA, output = "everything",
@@ -240,7 +235,7 @@ MAGENTA(beta.sumstats.obj = beta.sumstats.obj3,
         drug.list = drug.list)
 ```
 
-In the default setting, MAGENTA will return the omnibus joint or GEI p values. Users can also choose to print out these intermediate joint/GEI p values for multi-/single-traits $\times$ multi-/single-variant analysis (*output* = "omnibus", "everything", "MTMV", "STMV", "MTSV", "STSV").
+In the default setting, MTAGEI will return the omnibus joint or GEI p values. Users can also choose to print out these intermediate joint/GEI p values for multi-/single-traits $\times$ multi-/single-variant analysis (*output* = "omnibus", "everything", "MTMV", "STMV", "MTSV", "STSV").
 
 
 ## URLs

@@ -89,14 +89,14 @@ nonpolymorphic.fn <- function(mat, obs.stat, GEI = FALSE, nonpoly.list = NULL) {
 }
 
 remove.nonpoly <- function(x, nonpoly.k1, nonpoly.k2) {
-  if(class(x) == "numeric") {
+  if(inherits(x, "numeric")) { #if (class(x) == "numeric") { a bad form to check that the class was equal to a particular value
     if(length(nonpoly.k1) != 0) {
       ind1 <- which(names(x) %in% nonpoly.k1)
       if(length(ind1) != 0) {
         x <- x[-ind1]
       }
     }
-  }else if(class(x) == "matrix") {
+  }else if(inherits(x, "matrix")) {#if(class(x) == "matrix") {
     if(length(nonpoly.k1)!=0 & length(nonpoly.k2) != 0) {
       ind1 <- which(rownames(x) %in% nonpoly.k1)
       ind2 <- which(colnames(x) %in% nonpoly.k2)
