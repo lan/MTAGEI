@@ -80,13 +80,18 @@ versions of software are, specifically:
 Demo
 ----
 
+<<<<<<< HEAD
 Detailed instructions can be found in Vignetts/MTAGEI.html file.
+=======
+Detailed instructions can be found in Vignetts/MAGENTA.html file or via [this link](https://htmlpreview.github.io/?https://github.com/lan/MAGENTA/blob/master/vignettes/MAGENTA.html)
+>>>>>>> 35c94a5c2c93f0d454dea2796f58408509dd7874
 
 URLs
 ----
 
 ldsc website:
 <a href="https://github.com/bulik/ldsc/wiki/Heritability-and-Genetic-Correlation" class="uri">https://github.com/bulik/ldsc/wiki/Heritability-and-Genetic-Correlation</a>
+
 Genetic correlation:
 <a href="https://media.nature.com/original/nature-assets/ng/journal/v47/n11/extref/ng.3406-S2.csv" class="uri">https://media.nature.com/original/nature-assets/ng/journal/v47/n11/extref/ng.3406-S2.csv</a>
 
