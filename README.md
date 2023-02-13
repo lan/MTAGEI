@@ -13,11 +13,11 @@ Overview
 Studying genotype-by-environment interaction (GEI) is fundamental in
 understanding complex trait variations. Identifying genetic variants
 with GEI effects is challenging because the GEI analysis generally has
-low power. MAGENTA (Multi-trait Analysis of Gene-ENvironmenT-wide
+low power. MTAGEI (Multi-trait Analysis of Gene-ENvironmenT-wide
 Association) is a powerful, robust, and computationally efficient method
 to test the interaction between a gene and environmental groups on
 multiple traits in large-scale datasets, such as the UK Biobank. More
-details about MAGENTA can be found in Luo et al (2022).
+details about MTAGEI can be found in Luo et al (2022).
 
 Specifically, `MTAGEI` package has functions to
 
@@ -83,7 +83,7 @@ Demo
 <<<<<<< HEAD
 Detailed instructions can be found in Vignetts/MTAGEI.html file.
 =======
-Detailed instructions can be found in Vignetts/MAGENTA.html file or via [this link](https://htmlpreview.github.io/?https://github.com/lan/MAGENTA/blob/master/vignettes/MAGENTA.html)
+Detailed instructions can be found in Vignetts/MTAGEI.html file or via [this link](https://htmlpreview.github.io/?https://github.com/lan/MTAGEI/blob/master/vignettes/MTAGEI.html)
 >>>>>>> 35c94a5c2c93f0d454dea2796f58408509dd7874
 
 URLs
