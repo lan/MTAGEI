@@ -1,5 +1,5 @@
 ---
-title: "Multi-trait Analysis of Gene-by-Environment Interactions Using Summary Statistics of Genetic Marginal Effects"
+title: "Multi-trait Analysis of Gene-by-Environment Interactions in Large-scale Genetic Studies"
 author: Lan Luo
 output: rmarkdown::html_vignette
 bibliography: reference.bib
@@ -49,26 +49,16 @@ Windows 10 (R version 3.6.1)
 The CRAN package should be compatible with Windows and Mac operating systems.
 
 ## Installing Guide
-<<<<<<< HEAD
 `MAGENTA` package requires R with version 3.6.1 or higher, which can be downloaded and installed from [Github](https://github.com/lan/MAGENTA). 
 
 ```
 install.packages("MAGENTA.tar.gz", repos = NULL, type = "source")
-=======
-`MAGENTA` package requires R with version 3.6.1 or higher, which can be downloaded and installed from [CRAN](https://cran.r-project.org/). 
-
-```
-install.packages("MAGENTA")
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 ```
 
 ### Package dependencies
 
-<<<<<<< HEAD
-`MAGENTA` package depends on several R packages, which will be downloaded before installing `MAGENTA`. `MAGENTA` also uses non-exported R code from R packages `ACAT` and `SKAT` as they appear on `CRAN` or `github` on January 23, 2020 and October 28, 2021, respectively. The versions of other software are, specifically:
-=======
 `MAGENTA` package depends on several R packages, which will be downloaded before installing `MAGENTA`. `MAGENTA` also uses non-exported R code from R packages `ACAT` and `SKAT`. The `MAGENTA` package functions with all packages in their  versions as they appear on `CRAN` or `github` on January 23, 2020 and October 28, 2021, respectively. The versions of software are, specifically:
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
+
 ```
 MASS (>= 7.3-51.4),
 Matrix (>= 1.2-17),
@@ -89,13 +79,8 @@ caret (>=6.0-84)
 ### Step 1: Prepare Summary Statistics across environmental groups
 Suppose we are interested in testing the GEI effect on $K$ traits. Under each environmental group, we estimate the genetic marginal effects of $M$ variants on the $K$ traits and the covariances of these effect estimates. Let $\mathbf{\beta}^{(d)}_k$ denote the effects of the $M$ variants on trait $k$ in environmental group $d$ and $\widehat{\mathbf{\beta}}^{(d)}_k$ denote the corresponding effect estimates. We let $\text{cov}(\widehat{\mathbf{\beta}}_k^{(d)}, \widehat{\mathbf{\beta}}_{k'}^{(d)})$ denote the covariance of  $\widehat{\mathbf{\beta}}_k^{(d)}$ and $\widehat{\mathbf{\beta}}_{k'}^{(d)}$. For the same trait $k=k'$, the $\text{cov}(\widehat{\mathbf{\beta}}_k^{(d)}, \widehat{\mathbf{\beta}}_{k'}^{(d)})$ is the variance-covariance of $\widehat{\mathbf{\beta}}^{(d)}_k$. For different traits $k\neq k'$, $\text{cov}(\widehat{\mathbf{\beta}}_k^{(d)}, \widehat{\mathbf{\beta}}_{k'}^{(d)})$ quantifies the covariance between effect estimates on the two traits when they are measured on the overlapping set of subjects and $\text{cov}(\widehat{\mathbf{\beta}}_k^{(d)}, \widehat{\mathbf{\beta}}_{k'}^{(d)})=0$ if there are no overlapping subjects. For the simplicity of notation, we drop the environmental group index $(d)$ in the remaining part of this section
 
-<<<<<<< HEAD
-We first obtain the variant-level score statistics $\mathbf{U}_k$ for testing the genetic effect $\mathbf{\beta}_k = 0$ and its variance-covariance estimate $\mathbf{V}_k$. The calculation of the score statistics is computationally efficient as it fits a genotype-independent regression model (i.e., $\mathbf{\beta}_k = 0$) only once in the genome-wide analysis. We estimate the genetic effect as
-$\mathbf{\hat{\beta}}_k = \mathbf{V}_k^{-1}\mathbf{U}_k$. This estimate is numerically stable and accurate and has been commonly employed
-in the genetic association analysis of sequencing studies and shared in public domains
-=======
+We first obtain the variant-level score statistics $\mathbf{U}_k$ for testing the genetic effect $\mathbf{\beta}_k = 0$ and its variance-covariance estimate $\mathbf{V}_k$. The calculation of the score statistics is computationally efficient as it fits a genotype-independent regression model (i.e., $\mathbf{\beta}_k = 0$) only once in the genome-wide analysis. We estimate the genetic effect as $\mathbf{\hat{\beta}}_k = \mathbf{V}_k^{-1}\mathbf{U}_k$. This estimate is numerically stable and accurate and has been commonly employed in the genetic association analysis of sequencing studies and shared in public domains
 The variant-level score statistics $\mathbf{U}_k$ for testing the genetic effect $\mathbf{\beta}_k = 0$ and its variance-covariance estimate $\mathbf{V}_k$ are routinely used to construct the marginal effect estimates $\widehat{\mathbf{\beta}}_k = \mathbf{V}^{-1}_k\mathbf{U}_k$.
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 
 MAGENTA introduces below two approaches of estimating $\text{cov}(\widehat{\mathbf{\beta}}_k, \widehat{\mathbf{\beta}}_{k'})$. One approach needs individual-level data of all traits but can accurately estimate the correlation induced by the overlapping subjects across trait. The other approach utilizes only the trait-specific summary statistics $\mathbf{U}_k$ and $\mathbf{V}_k$ and is accurate when there are no genetic main effects, which is true under the null hypothesis of main test or joint test, but not necessarily the case under the null hypothesis of GEI test. This apparoch can still provide a reasonable approximation when the main effects are weak but may be inaccurate when the genetic main effects are unusually strong
 
@@ -120,30 +105,19 @@ head(dat)
 colnames(geno.dat)
 ```
 
-<<<<<<< HEAD
 The function *Get_beta_cov_data* additionally requires user to specify the names of covariates, traits, SNPs and treatment or environmental variable. Currently, it only allows $K$ same type of traits (all continuous or binary). Specifically, *KA* represents the genetic correlation information among $K$ traits (@Bulik2015). The genetic correlation can be estimated using *ldsc* software (@bulik2015ld and URLs). Some websites also archive the genetic correlation among many complex traits (see URLs). Other information such as the LD correlation matrix *R.C*, minor allele frequency *MAF*, the list of traits and environmental groups, the list of SNPs that users want to include in the single-variant analysis (optional, users can also specify the threshold of MAF) need to be provided by the users.
 
 ```{r get_beta_cov_data, eval = TRUE, echo = TRUE}
-=======
-The function *Get_beta_cov_data* additionally requires user to specify the names of covariates, traits, SNPs and treatment or environmental variable. Currently, it only allows $K$ same type of traits. Specifically, *KA* represents the genetic correlation information (@Bulik2015). The genetic correlation can be estimated using *ldsc* software (@bulik2015ld and URLs). Some websites also archive the genetic correlation among many complex traits (URLs). Other information such as the LD correlation matrix *R.C*, minor allele frequency *MAF*, the list of traits and environmental groups, the list of SNPs that users want to include in the single-variant analysis (optional, users can also specify the threshold of MAF) need to be provided by the users.
-
-```{r get_beta_cov_data, eval = TRUE, echo = TRUE}
 ## start from the individual-level data
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 K <- 3
 KA <- matrix(c(1, -0.03, 0.3, -0.03, 1, -0.535, 0.3, -0.535, 1), byrow = T, nrow = 3)
 rownames(KA) <- colnames(KA) <- paste0("Trait", 1:K)
 trait.list = paste0("Trait", 1:K)
 drug.list = paste0("Drug", 0:1)
 D <- 2
-<<<<<<< HEAD
 MAF <- colMeans(geno.dat[, -1])/2 #MAF and LD correlation can be obtained from external panel
-=======
-MAF <- colMeans(geno.dat[, -1])/2
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 R.C <- cor(geno.dat[, -1])
 R.C[is.na(R.C)] <- 0
-## start from the individual-level data ##
 beta.sumstats.obj1 <- Get_beta_cov_data(geno.dat = geno.dat, dat = dat,
                                    cov.list = c("cov1", "cov2"),
                                    env = "treatment",
@@ -152,17 +126,14 @@ beta.sumstats.obj1 <- Get_beta_cov_data(geno.dat = geno.dat, dat = dat,
                                    SNP.list = colnames(geno.dat)[-1])
 ```
 
-<<<<<<< HEAD
-The returning object contains the marginal genetic effect estimates $\mathbf{\beta}_k^{(d)}$ as well as the variance-covariance estimate $\text{cov}(\widehat{\mathbf{\beta}}_k, \widehat{\mathbf{\beta}}_{k'})$ for $k$th trait in $d$th environmental group. 
-=======
 The returning object contains the marginal genetic effect estimates $\mathbf{\beta}_k^{(d)}$ as well as the variance-covariance estimate $\text{cov}(\widehat{\mathbf{\beta}}_k, \widehat{\mathbf{\beta}}_{k'})$ for $k$th trait in $d$th environmental group.
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
+
 ```{r betasumstats, eval = TRUE, echo = TRUE}
 names(beta.sumstats.obj1)
 ```
 
-<<<<<<< HEAD
-For binary traits, the normal approximation for the summary statistics can be inaccurate even for variants with MAC > 10. We apply a saddlepoint approximation (SPA) (@dey2017fast) and use the SPA-adjusted summary statistics to improve the accuracy of the variant-level p-values. If *type* is set as "binary" by the users, the Saddle point approximation (SPA) method will be automatically applied and the object beta.sumstats.SPA will be non-empty. 
+For binary traits, the normal approximation for the summary statistics can be inaccurate even for variants with MAC > 10. We apply a Saddlepoint approximation (SPA) (@dey2017fast) and use the SPA-adjusted summary statistics to improve the accuracy of the variant-level p-values. If *type* is set as "binary" by the users, the Saddle point approximation (SPA) method will be automatically applied and the object beta.sumstats.SPA will be non-empty.
+
 ```{r binarytraits, eval = TRUE, echo = TRUE}
 dat.bin <- dat
 dat.bin[, which(colnames(dat) %in% trait.list)] <- 
@@ -177,24 +148,16 @@ beta.sumstats.obj1.bin <- Get_beta_cov_data(geno.dat = geno.dat, dat = dat.bin,
 str(beta.sumstats.obj1.bin$beta.sumstats.SPA)
 ```
 
-=======
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
+
 #### 2. Input data is trait-specific summary statistics
 When there are no genetic main effects or the effects are weak,
 we can estimate $\text{cov}(\widehat{\mathbf{\beta}}_k, \widehat{\mathbf{\beta}}_{k'})$ only using the trait-specific summary statistics:
 
 \[
-<<<<<<< HEAD
   \text{cov}(\widehat{\mathbf{\beta}}_{k}, \widehat{\mathbf{\beta}}_{k'}) = \widehat\zeta_{kk'}\mathbf{V}_{k}^{-1}{\rm diag}(\mathbf{V}_{k})^{1/2}\mathbf{R}{\rm diag}(\mathbf{V}_{k'})^{1/2}\mathbf{V}_{k'}^{-1} 
 \]
 
 When $k=k'$, $\widehat{\zeta}_{kk'}=1$; When $k\neq k'$,  $\widehat{\zeta}_{kk'}$ is estimated using the sample correlation of Z-scores between traits $k$ and $k'$ over a large number of independent common variants not associated with the traits (@luo2020multi). The $\mathbf{R}$ is the correlation matrix among variants calculated using the Pearson correlation coefficient among the genotypes of the variants, which can be from an external reference genotype data (same as *R.C*). 
-=======
-  \text{cov}(\widehat{\mathbf{\beta}}_{k}, \widehat{\mathbf{\beta}}_{k'}) = \widehat\zeta_{kk'}\mathbf{V}_{k}^{-1}{\rm diag}(\mathbf{V}_{k})^{1/2}\mathbf{R}{\rm diag}(\mathbf{V}_{k'})^{1/2}\mathbf{V}_{k'}^{-1} %~~~~~~~~~~~~~~~~~~~~~ (1)
-\]
-
-When $k=k'$, $\widehat{\zeta}_{kk'}=1$; When $k\neq k'$,  $\widehat{\zeta}_{kk'}$ is estimated using the sample correlation of Z-scores between traits $k$ and $k'$ over a large number of independent common variants not associated with the traits (@luo2020multi). The $\mathbf{R}$ is the correlation matrix among variants calculated using the Pearson correlation coefficient among the genotypes of the variants, which can be from an external reference genotype data. 
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 
 Here we show an example of using *Get_beta_cov_UV* function. Given the score summary statistics for $k$th trait in $d$th environmental group, we first need to estimate the covariance matrix of Z-scores between traits *zeta* in each environmental group, which can be calculated using *Get_zeta* function with input of score summary statistics ($U_{kj}^{(d)}$ and its variance $V_{kj}^{(d)}$) of a large number (>=500) common independent variants that are not associated with the traits.
 
@@ -212,7 +175,7 @@ Given the variant-level score summary statistics and *zeta* matrix, MAGENTA will
 If the genetic main effect p value is less than the pre-specified threshold (default is $5\times 10^{-3}$), it will prompt a warning that the estimated GEI p value may be biased. 
 
 ```{r get_beta_cov_UV, eval = TRUE, echo = TRUE}
-<<<<<<< HEAD
+
 beta.sumstats.obj2 <- Get_beta_cov_UV(sumstats.obj = sumstats.dat, MAF = MAF, 
                                       R.C = R.C,
                                       zeta.ret = zeta.ret, KA = KA,
@@ -242,23 +205,6 @@ names(beta.sumstats.obj2.bin)
 detach(sumstats.dat.bin)
 ```
 
-=======
-beta.sumstats.obj2 <- Get_beta_cov_UV(sumstats = sumstats, MAF = MAF, R.C = R.C,
-                                     zeta.ret = zeta.ret, KA = KA,
-                                     test = "joint",
-                                     trait.list = paste0("Trait", 1:K))
-names(beta.sumstats.obj2)
-```
-<!-- #### 3. Saddle point approximation for binary traits -->
-<!-- For binary traits, the normal approximation for the summary statistics can be inaccurate even for variants with MAC $>$ 10 (@dey2017fast,@bi2020fast). We apply a saddlepoint approximation (SPA) and use the SPA-adjusted summary statistics to improve the accuracy of the variant-level p values. -->
-
-<!-- 1. Use R package SPAtest to obtain the SPA p value $P_{\rm SPA}$ for testing the association between the variant and the trait. \cite{dey2017fast} -->
-<!-- 2. Convert $P_{\rm SPA}$ to Z-score by using $Z_{\rm SPA} = {\rm sign}(U) \Phi^{-1}(P_{\rm SPA}/2)$, where  $U$ is the score statistic for the single-variant test and $\Phi^{-1}(\cdot)$ is the quantile function of the standard normal distribution.  -->
-<!-- 3. The SPA-adjusted variance of the score statistic is calculated as $V_{\rm SPA}=(U/Z_{\rm SPA})^2$. -->
-
-<!-- MAGENTA will authomatically apply SPA approach once the input traits are binary. -->
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
-
 ### Step 2. Perform joint and GEI tests for common and rare variants (MAGENTA)
 To facilitate the meta-analysis of GEI in large consortium-based studies, MAGENTA translates testing for GEI to testing for heterogeneity of genetic marginal effects across environmental groups and generate summary statistics for marginal effects of multiple variants in the gene on multiple traits of interest. MAGENTA combines these summary statistics and produces a GEI test and a joint test of genetic main and GEI effects. 
 
@@ -281,19 +227,14 @@ MAGENTA(beta.sumstats.obj = beta.sumstats.obj2,
         R.C = R.C, KA = KA, output = "omnibus",
         trait.list = trait.list,
         drug.list = drug.list)
-<<<<<<< HEAD
+
 beta.sumstats.obj3 <- Get_beta_cov_UV(sumstats.obj = sumstats.dat, MAF = MAF, R.C = R.C,
                                      zeta.ret = zeta.ret, KA = KA,
                                      test = "GEI", type = "conitnuous",
-=======
-beta.sumstats.obj3 <- Get_beta_cov_UV(sumstats = sumstats, MAF = MAF, R.C = R.C,
-                                     zeta.ret = zeta.ret, KA = KA,
-                                     test = "GEI",
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
                                      trait.list = paste0("Trait", 1:K))
 
 MAGENTA(beta.sumstats.obj = beta.sumstats.obj3,
-        test = "GEI", way = "eq4",MAF = MAF,MAC10.bygrp = GEI.MAC10,
+        test = "GEI", way = "eq4", MAF = MAF,MAC10.bygrp = GEI.MAC10,
         R.C = R.C, KA = KA, output = "MTMV",
         trait.list = trait.list,
         drug.list = drug.list)
