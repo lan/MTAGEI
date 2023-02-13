@@ -79,7 +79,7 @@ versions of software are, specifically:
 Demo
 ----
 
-Detailed instructions can be found in Vignetts/MTAGEI.html file.
+Detailed instructions can be found in Vignetts/MTAGEI.html file. [Preview](https://htmlpreview.github.io/?)
 
 URLs
 ----
@@ -104,8 +104,7 @@ Regression Distinguishes Confounding from Polygenicity in Genome-Wide
 Association Studies.” Nature Genetics 47 (3): 291.
 
 Luo, Lan, Devan V Mehrotra, Judong Shen, and Zheng-Zheng Tang. 2023.
-“Multi-Trait Analysis of Gene-by-Environment Interactions Using Summary
-Statistics of Genetic Marginal Effects.” Submitted.
+“Multi-Trait Analysis of Gene-by-Environment Interactions in Large-scale Genetic Studies.” Submitted to Biostatistics.
 
 Luo, Lan, Judong Shen, Hong Zhang, Aparna Chhibber, Devan V Mehrotra,
 and Zheng-Zheng Tang. 2020. “Multi-Trait Analysis of Rare-Variant
