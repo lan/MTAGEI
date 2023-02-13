@@ -76,6 +76,10 @@ versions of software are, specifically:
     CompQuadForm (>= 1.4.3),
     caret (>=6.0-84)
 
+Demo
+----
+
+Detailed instructions can be found in Vignetts/MTAGEI.html file.
 URLs
 ----
 
