@@ -13,11 +13,10 @@ Overview
 Studying genotype-by-environment interaction (GEI) is fundamental in
 understanding complex trait variations. Identifying genetic variants
 with GEI effects is challenging because the GEI analysis generally has
-low power. MTAGEI (Multi-trait Analysis of Gene-ENvironmenT-wide
-Association) is a powerful, robust, and computationally efficient method
+low power. MTAGEI (Multi-Trait Analysis of Gene-Environment Interactions) is a powerful, robust, and computationally efficient method
 to test the interaction between a gene and environmental groups on
 multiple traits in large-scale datasets, such as the UK Biobank. More
-details about MTAGEI can be found in Luo et al (2022).
+details about MTAGEI can be found in Luo et al (2023).
 
 Specifically, `MTAGEI` package has functions to
 
@@ -77,15 +76,6 @@ versions of software are, specifically:
     CompQuadForm (>= 1.4.3),
     caret (>=6.0-84)
 
-Demo
-----
-
-<<<<<<< HEAD
-Detailed instructions can be found in Vignetts/MTAGEI.html file.
-=======
-Detailed instructions can be found in Vignetts/MTAGEI.html file or via [this link](https://htmlpreview.github.io/?https://github.com/lan/MTAGEI/blob/master/vignettes/MTAGEI.html)
->>>>>>> 35c94a5c2c93f0d454dea2796f58408509dd7874
-
 URLs
 ----
 
@@ -108,7 +98,7 @@ Jian Yang, Nick Patterson, Mark J Daly, et al. 2015. “LD Score
 Regression Distinguishes Confounding from Polygenicity in Genome-Wide
 Association Studies.” Nature Genetics 47 (3): 291.
 
-Luo, Lan, Devan V Mehrotra, Judong Shen, and Zheng-Zheng Tang. 2022.
+Luo, Lan, Devan V Mehrotra, Judong Shen, and Zheng-Zheng Tang. 2023.
 “Multi-Trait Analysis of Gene-by-Environment Interactions Using Summary
 Statistics of Genetic Marginal Effects.” Submitted.
 
