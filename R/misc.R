@@ -1,6 +1,6 @@
-## non-exported functions from MAGENTA package
+## non-exported functions from MTAGEI package
 recoverLD <- function(sumstats, snp.list, bymean = TRUE){
-  ## recover R.C from input of V, so MAGENTA doesn't need the extra input of R.C
+  ## recover R.C from input of V, so MTAGEI doesn't need the extra input of R.C
   ## start ##
   D <- length(sumstats)
   K <- length(sumstats[[1]])

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 ```{r load, eval = TRUE, echo=FALSE}
-library(MAGENTA)
+library(MTAGEI)
 ```
 
 ## Contents
@@ -206,18 +206,18 @@ To facilitate the meta-analysis of GEI in large consortium-based studies, MTAGEI
 To run MTAGEI function, the returning object from the functions *Get_beta_cov_UV* or *Get_beta_cov_data* is required. Other inputs are optional. The users also need to specify the which test (joint or GEI) given which kind of input data (eq3 is for individual-level data and eq4 is for score summary statistics data). 
 
 ```{r MTAGEI, eval = TRUE}
-MAGENTA(beta.sumstats.obj = beta.sumstats.obj1,
+MTAGEI(beta.sumstats.obj = beta.sumstats.obj1,
         test = "joint", way = "eq3",MAF = MAF,
         R.C = R.C, KA = KA, output = "everything",
         trait.list = trait.list,
         drug.list = drug.list)
 
-MAGENTA(beta.sumstats.obj = beta.sumstats.obj1,
+MTAGEI(beta.sumstats.obj = beta.sumstats.obj1,
         test = "GEI", way = "eq3",MAF = MAF,
         R.C = R.C, KA = KA, output = "STSV",
         trait.list = trait.list,
         drug.list = drug.list)
-MAGENTA(beta.sumstats.obj = beta.sumstats.obj2,
+MTAGEI(beta.sumstats.obj = beta.sumstats.obj2,
         test = "joint", way = "eq4",MAF = MAF,MAC10.bygrp = joint.MAC10,
         R.C = R.C, KA = KA, output = "omnibus",
         trait.list = trait.list,
@@ -228,7 +228,7 @@ beta.sumstats.obj3 <- Get_beta_cov_UV(sumstats.obj = sumstats.dat, MAF = MAF, R.
                                      test = "GEI", type = "conitnuous",
                                      trait.list = paste0("Trait", 1:K))
 
-MAGENTA(beta.sumstats.obj = beta.sumstats.obj3,
+MTAGEI(beta.sumstats.obj = beta.sumstats.obj3,
         test = "GEI", way = "eq4", MAF = MAF,MAC10.bygrp = GEI.MAC10,
         R.C = R.C, KA = KA, output = "MTMV",
         trait.list = trait.list,

@@ -9,5 +9,5 @@
 #' @importFrom caret findCorrelation
 #' @importFrom stringr str_split
 #' @importFrom SPAtest ScoreTest_SPA_wMeta
-#' @name MAGENTA
+#' @name MTAGEI
 NULL

@@ -118,7 +118,7 @@ cal.sum <- function(simdata, genotype, covariance = TRUE){
   names(obs.stat) <- paste0("Drug", drug.list)
   return(obs.stat)
 }
-#' Calculate the summary statistics required by MAGENTA given the score summary statistics
+#' Calculate the summary statistics required by MTAGEI given the score summary statistics
 #'
 #' This function allows you to calculate the summary statistics (beta, beta.cov) given the score summary statistics.
 #' @param sumstats.obj a list of score summary statistics (U, V) in each environmental group for each trait, if the traits are binary, should also include the SPA-adjusted score summary statistics
@@ -132,7 +132,7 @@ cal.sum <- function(simdata, genotype, covariance = TRUE){
 #' @param main.thres a threshold to prompt warning if the genetic main effect is too strong. Default is 5e-3
 #' @param test if set to "joint", the function will conduct joint test; if set to "GEI", the function will return GEI p value
 #' @param type should be set to "continuous" or "binary" for the traits type.
-#' @return summary statistics (beta, beta.cov) required by MAGENTA
+#' @return summary statistics (beta, beta.cov) required by MTAGEI
 #' @author Lan Luo
 #' @export
 #' @examples
@@ -173,7 +173,7 @@ Get_beta_cov_UV <- function(sumstats.obj, MAF, zeta.ret, R.C, KA, MAF.thres = 0.
     ref <- D
   }
 
-  # recover R.C from input of V, so MAGENTA doesn't need the extra input of R.C
+  # recover R.C from input of V, so MTAGEI doesn't need the extra input of R.C
   if(is.null(R.C)) {
     R.C <- recoverLD(sumstats = sumstats, snp.list = snp.list)
     message("The LD matrix is not provided and recovered from the summary statistics V.")
@@ -190,12 +190,12 @@ Get_beta_cov_UV <- function(sumstats.obj, MAF, zeta.ret, R.C, KA, MAF.thres = 0.
     U.comb[[k]] <- U.temp
     V.comb[[k]] <- V.temp
   }
-  combMTAR.p <- try(MAGENTA.main(U = U.comb, V = V.comb, MAF = MAF, R.C = R.C, snp.list = names(MAF),
+  combMTAR.p <- try(MTAGEI.main(U = U.comb, V = V.comb, MAF = MAF, R.C = R.C, snp.list = names(MAF),
                                  cct = TRUE, KA = KA, zeta = zeta.ret$zeta.main, diffweight = FALSE)$p,
                     silent = T)
   singletrait.p <- list()
   for(k in 1:K){
-    singletrait.p[[k]] <- try(MAGENTA.main(U = list(U.comb[[k]]), V = list(V.comb[[k]]), MAF = MAF, R.C = R.C,
+    singletrait.p[[k]] <- try(MTAGEI.main(U = list(U.comb[[k]]), V = list(V.comb[[k]]), MAF = MAF, R.C = R.C,
                                            snp.list = names(MAF), KA = matrix(1),
                                            rho.trait = c(0.5, 5, 1),
                                            zeta = matrix(1), cct = TRUE, diffweight = FALSE)$p,silent = T)
@@ -580,7 +580,7 @@ convert_UV_to_betacov <- function(D, K, snp.list, sumstats, test, R.C, ref){
   return(final.ret)
 }
 
-#' Calculate the summary statistics required by MAGENTA given the individual-level data
+#' Calculate the summary statistics required by MTAGEI given the individual-level data
 #'
 #' This function allows you to calculate the summary statistics (beta, beta.cov) given the individual-level data.
 #' @param dat a matrix containing traits and covariates data. Each row represent one subject.
@@ -592,7 +592,7 @@ convert_UV_to_betacov <- function(D, K, snp.list, sumstats, test, R.C, ref){
 #' @param ID indicator which column is unique subject ID
 #' @param env which column represents the environmental variable
 #' @param stats Use the score summary statistics or wald summary statistics. Default is "score".
-#' @return summary statistics (beta, beta.cov) required by MAGENTA
+#' @return summary statistics (beta, beta.cov) required by MTAGEI
 #' @author Lan Luo
 #' @export
 #' @examples

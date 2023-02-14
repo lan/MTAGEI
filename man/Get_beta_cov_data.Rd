@@ -2,7 +2,7 @@
 % Please edit documentation in R/sumstats.R
 \name{Get_beta_cov_data}
 \alias{Get_beta_cov_data}
-\title{Calculate the summary statistics required by MAGENTA given the individual-level data}
+\title{Calculate the summary statistics required by MTAGEI given the individual-level data}
 \usage{
 Get_beta_cov_data(
   dat,
@@ -36,7 +36,7 @@ Get_beta_cov_data(
 \item{type}{type of the traits data.}
 }
 \value{
-summary statistics (beta, beta.cov) required by MAGENTA
+summary statistics (beta, beta.cov) required by MTAGEI
 }
 \description{
 This function allows you to calculate the summary statistics (beta, beta.cov) given the individual-level data.

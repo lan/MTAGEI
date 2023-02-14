@@ -15,6 +15,6 @@ There are 3 traits, 86 variants (both rare and common). Specifically, there are 
 data(rawdata)
 }
 \description{
-An example of calculating summary statistics in MAGENTA given the individual-level data set.
+An example of calculating summary statistics in MTAGEI given the individual-level data set.
 }
 \keyword{datasets}

@@ -3,7 +3,7 @@
 export(Get_beta_cov_UV)
 export(Get_beta_cov_data)
 export(Get_zeta)
-export(MAGENTA)
+export(MTAGEI)
 import(MASS)
 import(stats)
 import(survival)

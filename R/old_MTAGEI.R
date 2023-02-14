@@ -7,7 +7,7 @@ combMTAR <- function(x, rho){
   return(y)
 }
 
-MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
+MTAGEI.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
                           # diagTrans = FALSE,
                           R.C = NULL, cct = TRUE,
                           diffweight = FALSE,
@@ -39,13 +39,13 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     KA <- diag(K)
   }
   if (is.null(zeta)) {
-    message("Without the input of zeta, MAGENTA assumes there are no overlap samples in the dataset.")
+    message("Without the input of zeta, MTAGEI assumes there are no overlap samples in the dataset.")
     zeta <- list()
     for(d in 1:D) {
       zeta[[d]] <- diag(K)
     }
   }
-  message("Conducting MAGENTA analysis ...")
+  message("Conducting MTAGEI analysis ...")
 
   if(diffweight) {
     message("Use different weights for rare and common variants:")
@@ -58,7 +58,7 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     common.SNP <- which(MAF >= threshold)
   }
   #
-  #   # recover R.C from input of V, so MAGENTA doesn't need the extra input of R.C
+  #   # recover R.C from input of V, so MTAGEI doesn't need the extra input of R.C
   #   if(is.null(R.C)) {
   #     R.C <- recoverLD(sumstats = sumstats, snp.list = snp.list)
   #     message("The LD matrix is not provided and recovered from the summary statistics V.")
@@ -139,8 +139,8 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     # print(paste0("Done inverse of U at ", Sys.time()))
     if (inherits(U.inv, "try-error")) {
       warning("The covariance matrix of U is exactly singular, MASS:ginv() function doesn't work here.")
-      MAGENTA.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA,rho3.min = NA)
-      return(MAGENTA.cct.p)
+      MTAGEI.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA,rho3.min = NA)
+      return(MTAGEI.cct.p)
     }
     V.diag.all <- as.matrix(Matrix::bdiag(V.diag.bydrug))
     Sigma.inv <- V.diag.all %*% U.inv %*% V.diag.all #inverse of covariance matrix of beta
@@ -156,8 +156,8 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     U.inv <- try(MASS::ginv(U.cov.all), silent = T)
     if (inherits(U.inv, "try-error")) {
       warning("The covariance matrix of U is exactly singular, MASS:ginv() function doesn't work here.")
-      MAGENTA.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, rho3.min = NA)
-      return(MAGENTA.cct.p)
+      MTAGEI.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, rho3.min = NA)
+      return(MTAGEI.cct.p)
     }
   }
 
@@ -229,13 +229,13 @@ MAGENTA.joint <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     }
 
   }
-  MAGENTA.cct.p <- list(p = p.obs,
+  MTAGEI.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
-  return(MAGENTA.cct.p)
+  return(MTAGEI.cct.p)
 }
 
-MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
+MTAGEI.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
                           # diagTrans = FALSE,
                           zeta = NULL,
                           rho.SNP = c(0, 0.5, 1),
@@ -250,15 +250,15 @@ MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
   m <- length(MAF)
 
   if (is.null(KA)) {
-    message("Without the input of genetic correlation information, an exchangeable correlation structure among traits is assumed in MAGENTA.")
+    message("Without the input of genetic correlation information, an exchangeable correlation structure among traits is assumed in MTAGEI.")
     KA <- diag(K)
   }
   if (is.null(zeta)) {
-    message("Without the input of zeta, MAGENTA assumes there are no overlap samples in the dataset.")
+    message("Without the input of zeta, MTAGEI assumes there are no overlap samples in the dataset.")
     zeta <- diag(K)
   }
 
-  message("Conducting MAGENTA genetic main effect analysis ...")
+  message("Conducting MTAGEI genetic main effect analysis ...")
 
   if(diffweight) {
     message("Use different weights for rare and common variants:")
@@ -333,8 +333,8 @@ MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
     U.inv <- try(MASS::ginv(U.cov), silent = T)
     if (inherits(U.inv, "try-error")) {
       warning("The covariance matrix of U is exactly singular, MASS:ginv() function doesn't work here.")
-      MAGENTA.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, det = NA, eigen = NA)
-      return(MAGENTA.cct.p)
+      MTAGEI.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, det = NA, eigen = NA)
+      return(MTAGEI.cct.p)
     }
     V.diag <- as.matrix(Matrix::bdiag(mlist))
     Sigma.inv <- V.diag %*% MASS::ginv(U.cov) %*% V.diag
@@ -347,8 +347,8 @@ MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
     U.inv <- try(MASS::ginv(U.cov), silent = T)
     if (inherits(U.inv, "try-error")) {
       warning("The covariance matrix of U is exactly singular, MASS:ginv() function doesn't work here.")
-      MAGENTA.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, det = NA, eigen = NA)
-      return(MAGENTA.cct.p)
+      MTAGEI.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, det = NA, eigen = NA)
+      return(MTAGEI.cct.p)
     }
   }
 
@@ -412,13 +412,13 @@ MAGENTA.main <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
     }
 
   }
-  MAGENTA.cct.p <- list(p = p.obs,
+  MTAGEI.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
-  return(MAGENTA.cct.p)
+  return(MTAGEI.cct.p)
 }
 
-MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
+MTAGEI.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
                              R.C = NULL, cct = TRUE, ref = NULL,
                              # diagTrans = FALSE,
                              diffweight = FALSE,
@@ -446,14 +446,14 @@ MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
   }
 
   if (is.null(KA)) {
-    message("Without the input of genetic correlation information, an exchangeable correlation structure among traits is assumed in MAGENTA.")
+    message("Without the input of genetic correlation information, an exchangeable correlation structure among traits is assumed in MTAGEI.")
     KA <- diag(K)
   }
   if (is.null(zeta)) {
-    message("Without the input of zeta, MAGENTA assumes there are no overlap samples in the dataset.")
+    message("Without the input of zeta, MTAGEI assumes there are no overlap samples in the dataset.")
     zeta <- diag(K * D)
   }
-  message("Conducting MAGENTA GEI analysis ...")
+  message("Conducting MTAGEI GEI analysis ...")
 
   if(diffweight) {
     message("Use different weights for rare and common variants:")
@@ -465,7 +465,7 @@ MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     }
     common.SNP <- which(MAF >= threshold)
   }
-  ## recover R.C from input of V, so MAGENTA doesn't need the extra input of R.C
+  ## recover R.C from input of V, so MTAGEI doesn't need the extra input of R.C
   if(is.null(R.C)) {
     R.C <- recoverLD(sumstats = sumstats, snp.list = snp.list)
     message("The LD matrix is not provided and recovered from the summary statistics V.")
@@ -663,8 +663,8 @@ MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
   Sigma.delta.inv <- try(MASS::ginv(Sigma.delta), silent = T)
   if (inherits(Sigma.delta.inv, "try-error")){
     warning("The covariance matrix of delta is exactly singular, MASS:ginv() function doesn't work here.")
-    MAGENTA.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, rho3.min = NA)
-    return(MAGENTA.cct.p)
+    MTAGEI.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA, rho3.min = NA)
+    return(MTAGEI.cct.p)
   }
 
   KC <- diag(m)
@@ -754,14 +754,14 @@ MAGENTA.GEI.way1 <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     }
 
   }
-  MAGENTA.cct.p <- list(p = p.obs,
+  MTAGEI.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
 
-  return(MAGENTA.cct.p)
+  return(MTAGEI.cct.p)
 }
 
-MAGENTA.joint.variant <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
+MTAGEI.joint.variant <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
                                   # diagTrans = FALSE,
                                   R.C = NULL, cct = TRUE,
                                   diffweight = FALSE,
@@ -804,8 +804,8 @@ MAGENTA.joint.variant <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     U.inv <- try(MASS::ginv(U.cov.all), silent = T)
     if (inherits(U.inv, "try-error")) {
       warning("The covariance matrix of U is exactly singular, MASS:ginv() function doesn't work here.")
-      MAGENTA.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA,rho3.min = NA)
-      return(MAGENTA.cct.p)
+      MTAGEI.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA,rho3.min = NA)
+      return(MTAGEI.cct.p)
     }
     V.diag.all <- diag(V.stat)
     Sigma.inv <- V.diag.all %*% U.inv %*% V.diag.all #inverse of covariance matrix of beta
@@ -860,11 +860,11 @@ MAGENTA.joint.variant <- function(sumstats, MAF, KA = NULL, drugStruct = NULL,
     }
 
   }
-  MAGENTA.cct.p <- list(p = p.obs,
+  MTAGEI.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
 
-  return(MAGENTA.cct.p)
+  return(MTAGEI.cct.p)
 }
 
 
@@ -896,8 +896,8 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
     U.inv <- try(MASS::ginv(Ucov), silent = T)
     if (inherits(U.inv, "try-error")) {
       warning("The covariance matrix of U is exactly singular, MASS:ginv() function doesn't work here.")
-      MAGENTA.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA,rho3.min = NA)
-      return(MAGENTA.cct.p)
+      MTAGEI.cct.p <- list(p = NA, rho1.min = NA, rho2.min = NA,rho3.min = NA)
+      return(MTAGEI.cct.p)
     }
     V.diag.all <- diag(V.stat)
     Sigma.inv <- V.diag.all %*% U.inv %*% V.diag.all #inverse of covariance matrix of beta
@@ -956,15 +956,15 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
     }
 
   }
-  MAGENTA.cct.p <- list(p = p.obs,
+  MTAGEI.cct.p <- list(p = p.obs,
                         rho1.min = lambda[which.min(p.obs), ]$lambdaC,
                         rho2.min = lambda[which.min(p.obs), ]$lambdaA)
 
-  return(MAGENTA.cct.p)
+  return(MTAGEI.cct.p)
 }
 
 #
-# SPA_MAGENTA_diffU <- function(simdata, genotype, sumstats, zeta, zeta.list, zeta.GE,
+# SPA_MTAGEI_diffU <- function(simdata, genotype, sumstats, zeta, zeta.list, zeta.GE,
 #                               selSNP, MAF, R.C, KA, MAC.thres, way, MACadj = FALSE){
 #
 #   pval.main <- pval.joint <- pval.GEI <- NULL
@@ -1169,7 +1169,7 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
 #
 #       }else{
 #         # joint test #
-#         combMTAR.p <- try(MAGENTA.joint.variant(sumstats = sumstats.perSNP.joint,
+#         combMTAR.p <- try(MTAGEI.joint.variant(sumstats = sumstats.perSNP.joint,
 #                                                  MAF = MAF[selSNP[snp.id]],
 #                                                  R.C = 1, weight.SNP = NULL,
 #                                                  KA = KA,
@@ -1193,7 +1193,7 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
 #         singletrait.p <- list()
 #         for(k in 1:K){
 #           singletrait.tmp <-
-#             try(MAGENTA.joint.variant(sumstats = sumstats.bytrait.joint[[k]],
+#             try(MTAGEI.joint.variant(sumstats = sumstats.bytrait.joint[[k]],
 #                                        MAF = MAF[selSNP[snp.id]], KA = matrix(1),
 #                                        # diagTrans = TRUE,
 #                                        weight.SNP = NULL,
@@ -1219,9 +1219,9 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
 #       if(sum(MAC.perSNP[, snp.id]) != D) {
 #         pval.GEI <- rbind(pval.GEI, rep(NA, 4))
 #       }else{
-#         # if SNP has MAC > MAC.thres across all the groups, conduct MAGENTA GEI test
+#         # if SNP has MAC > MAC.thres across all the groups, conduct MTAGEI GEI test
 #         ## interaction effect test start ##
-#         combMTAR.p <-try(MAGENTA.GEI.way1(sumstats = sumstats.perSNP.joint,
+#         combMTAR.p <-try(MTAGEI.GEI.way1(sumstats = sumstats.perSNP.joint,
 #                                                        MAF = MAF[selSNP[snp.id]], KA = KA,
 #                                                        # diagTrans = TRUE,
 #                                                        R.C = 1, zeta = zeta.GE, drugStruct = "AR1",
@@ -1232,7 +1232,7 @@ MTAR.main.variant <- function (U, V, MAF, R.C = NULL, KA = NULL, snp.list,
 #         singletrait.p <- list()
 #         for(k in 1:K){
 #           singletrait.tmp <-
-#             try(MAGENTA.GEI.way1(sumstats = sumstats.bytrait.joint[[k]],
+#             try(MTAGEI.GEI.way1(sumstats = sumstats.bytrait.joint[[k]],
 #                                               MAF = MAF[selSNP[snp.id]], KA = matrix(1),
 #                                               # diagTrans = TRUE,
 #                                               R.C = 1,weight.SNP = NULL,
@@ -1347,7 +1347,7 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
 
       if(test %in% "joint") {
         # joint test #
-        combMTAR.p <- try(MAGENTA.joint.variant(sumstats = sumstats.perSNP,  MAF = MAF[MAC10[snp.id]],
+        combMTAR.p <- try(MTAGEI.joint.variant(sumstats = sumstats.perSNP,  MAF = MAF[MAC10[snp.id]],
                                                 R.C = 1, weight.SNP = NULL,
                                                 KA = KA,
                                                 # diagTrans = TRUE,
@@ -1370,7 +1370,7 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
         singletrait.p <- list()
         for(k in 1:K){
           singletrait.tmp <-
-            try(MAGENTA.joint.variant(sumstats = sumstats.bytrait[[k]], MAF = MAF[MAC10[snp.id]], KA = matrix(1),
+            try(MTAGEI.joint.variant(sumstats = sumstats.bytrait[[k]], MAF = MAF[MAC10[snp.id]], KA = matrix(1),
                                       # diagTrans = TRUE,
                                       weight.SNP = NULL,
                                       rho.trait = c(0.5, 5, 1),
@@ -1393,7 +1393,7 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
 
       if(test %in% "GEI") {
         ## interaction effect test start ##
-        combMTAR.p <-try(MAGENTA.GEI.way1(sumstats = sumstats.perSNP, MAF = MAF[MAC10[snp.id]], KA = KA,
+        combMTAR.p <-try(MTAGEI.GEI.way1(sumstats = sumstats.perSNP, MAF = MAF[MAC10[snp.id]], KA = KA,
                                           # diagTrans = TRUE,
                                           R.C = 1, zeta = zeta.GE, drugStruct = "AR1",weight.SNP = NULL,
                                           rho.drug = c(0, 0.5, 1), cct = TRUE,
@@ -1405,7 +1405,7 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
 
         for(k in 1:K){
           singletrait.tmp <-
-            try(MAGENTA.GEI.way1(sumstats = sumstats.bytrait[[k]], MAF = MAF[MAC10[snp.id]], KA = matrix(1),
+            try(MTAGEI.GEI.way1(sumstats = sumstats.bytrait[[k]], MAF = MAF[MAC10[snp.id]], KA = matrix(1),
                                  # diagTrans = TRUE,
                                  R.C = 1,weight.SNP = NULL,
                                  zeta = zeta.GE1, drugStruct = "AR1",
@@ -1455,7 +1455,7 @@ variantP3 <- function(sumstats, zeta.ret, MAF, R.C, KA, MAF.thres, test, SPA) {
   return(pval)
 }
 
-SPA_MAGENTA.sumstats <- function(genotype, simdata, selSNP, sumstats, MAC.thres = 10){
+SPA_MTAGEI.sumstats <- function(genotype, simdata, selSNP, sumstats, MAC.thres = 10){
   genotype <- genotype[, colnames(genotype) %in% selSNP, drop = FALSE]
   drug.list <- unique(simdata$covariates[, 3])
   D <- length(drug.list) # number of different drug assignments

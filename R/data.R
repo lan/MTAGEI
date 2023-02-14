@@ -1,6 +1,6 @@
 #' Example1: individual-level data
 #'
-#' An example of calculating summary statistics in MAGENTA given the individual-level data set.
+#' An example of calculating summary statistics in MTAGEI given the individual-level data set.
 #' @docType data
 #' @usage data(rawdata)
 #' @format A list with 2 sublists:
@@ -12,7 +12,7 @@
 
 #' Example2: the score summary statistics and their variance for continuous traits
 #'
-#' An example of calculating summary statistics in MAGENTA given the score summary statistics U and its variance V.
+#' An example of calculating summary statistics in MTAGEI given the score summary statistics U and its variance V.
 #' @docType data
 #' @format A list with 3 sublists:
 #' \describe{
@@ -26,7 +26,7 @@
 
 #' Example2: the score summary statistics and their variance for binary traits
 #'
-#' An example of calculating summary statistics in MAGENTA given the score summary statistics U and its variance V.
+#' An example of calculating summary statistics in MTAGEI given the score summary statistics U and its variance V.
 #' @docType data
 #' @format A list with 3 sublists:
 #' \describe{

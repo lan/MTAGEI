@@ -17,6 +17,6 @@ A list with 3 sublists:
 sumstats.dat
 }
 \description{
-An example of calculating summary statistics in MAGENTA given the score summary statistics U and its variance V.
+An example of calculating summary statistics in MTAGEI given the score summary statistics U and its variance V.
 }
 \keyword{datasets}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sumstats.R
 \name{Get_beta_cov_UV}
 \alias{Get_beta_cov_UV}
-\title{Calculate the summary statistics required by MAGENTA given the score summary statistics}
+\title{Calculate the summary statistics required by MTAGEI given the score summary statistics}
 \usage{
 Get_beta_cov_UV(
   sumstats.obj,
@@ -42,7 +42,7 @@ Get_beta_cov_UV(
 \item{test}{if set to "joint", the function will conduct joint test; if set to "GEI", the function will return GEI p value}
 }
 \value{
-summary statistics (beta, beta.cov) required by MAGENTA
+summary statistics (beta, beta.cov) required by MTAGEI
 }
 \description{
 This function allows you to calculate the summary statistics (beta, beta.cov) given the score summary statistics.
