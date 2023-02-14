@@ -52,7 +52,7 @@ The CRAN package should be compatible with Windows and Mac operating systems.
 `MTAGEI` package requires R with version 3.6.1 or higher, which can be downloaded and installed from [Github](https://github.com/lan/MTAGEI). 
 
 ```
-install.packages("MTAGEI.tar.gz", repos = NULL, type = "source")
+install.packages("MTAGEI_0.1.0.tar.gz", repos = NULL, type = "source")
 ```
 
 ### Package dependencies
