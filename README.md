@@ -79,7 +79,7 @@ versions of software are, specifically:
 Demo
 ----
 
-Detailed instructions can be found in Vignetts/MTAGEI.html file. [Preview](https://htmlpreview.github.io/?)
+Detailed instructions can be found in Vignetts/MTAGEI.html file. [Preview](https://htmlpreview.github.io/?https://github.com/lan/MTAGEI/blob/master/vignettes/MTAGEI.html)
 
 URLs
 ----
