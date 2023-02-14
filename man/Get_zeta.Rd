@@ -19,16 +19,14 @@ This function allows you to estimate the matrix \eqn{\zeta} to adjust for the po
 }
 \examples{
 \donttest{data(zeta.example)
-attach(zeta.example)
-# Downloading independent common SNPs from 1000Genome data set.
-githubURL <- "https://github.com/lan/MTAR/blob/master/indp_snps.1KG.rda?raw=true"
-utils::download.file(githubURL,"1kgfile")
-load("1kgfile")
-zeta1 <- Get_zeta(dat = dat, indp.common.geno.dat = indp.common.geno.dat,
-trait.list = paste0("Trait", 1:K),
-cov.list = c("cov1", "cov2"), env = "treatment")
-zeta1
-detach(zeta.example)
+data("sumstats.dat")
+names(sumstats.dat)
+attach(sumstats.dat)
+str(common.sumstats)
+K <- 3
+zeta.ret <- Get_zeta(common.sumstats = common.sumstats, trait.list = paste("Trait", 1:K))
+zeta.ret
+detach(sumstats.dat)
 }
 }
 \author{

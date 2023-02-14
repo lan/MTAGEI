@@ -4,15 +4,13 @@
 \name{rawdata}
 \alias{rawdata}
 \title{Example1: individual-level data}
-<<<<<<< HEAD
-\format{A list with 2 sublists:
+\format{
+A list with 2 sublists:
 \describe{
 \item{geno.dat}{a matrix of genotype data, each row denotes subject \eqn{i} and column represents SNP \eqn{j} in the gene, the first column is the unique subject IDs}
 \item{dat}{a matrix of traits, covariates and environmental/treatment variable data, the first column is the unique subject IDs.
-There are 3 traits, 86 variants (both rare and common). Specifically, there are 1000 subjects with three trait measurements. The environmental variable is treatment.}}}
-=======
-\format{An object of class \code{list} of length 2.}
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
+There are 3 traits, 86 variants (both rare and common). Specifically, there are 1000 subjects with three trait measurements. The environmental variable is treatment.}}
+}
 \usage{
 data(rawdata)
 }

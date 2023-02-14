@@ -7,8 +7,8 @@ MAGENTA.eq4.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
                                  rho.SNP = c(0, 0.5, 1),
                                  rho.trait = c(0.5, 5, 1),
                                  rho.drug = c(0, 0.5, 1),
-                                 weight.SNP = c(1, 25))
-{
+                                 weight.SNP = c(1, 25),
+                                 custom.weight = NULL){
   if(test == "joint") {
     beta.est <- beta.sumstats.obj$beta.est
     beta.cov <- beta.sumstats.obj$beta.cov
@@ -60,18 +60,23 @@ MAGENTA.eq4.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
 
   KC <- diag(m)
   MAF <- MAF[order(match(names(MAF), snp.list))]
-  if(diffweight) {
-    diag.tmp <- numeric(m)
-    if(length(common.SNP) != 0) {
-      diag.tmp[common.SNP] <- Beta.Weights(MAF[common.SNP], weights.beta = weight.commonSNP)
-      diag.tmp[-common.SNP] <- Beta.Weights(MAF[-common.SNP], weights.beta = weight.SNP)
-    }else{
-      diag.tmp <- Beta.Weights(MAF, weights.beta = weight.SNP)
-    }
+  if(is.null(custom.weight)) {
+    if(diffweight) {
+      diag.tmp <- numeric(m)
+      if(length(common.SNP) != 0) {
+        diag.tmp[common.SNP] <- Beta.Weights(MAF[common.SNP], weights.beta = weight.commonSNP)
+        diag.tmp[-common.SNP] <- Beta.Weights(MAF[-common.SNP], weights.beta = weight.SNP)
+      }else{
+        diag.tmp <- Beta.Weights(MAF, weights.beta = weight.SNP)
+      }
 
+    }else{
+      diag.tmp <- Beta.Weights(MAF, weights.beta = weight.SNP) #weights matrix for SNPs
+    }
   }else{
-    diag.tmp <- Beta.Weights(MAF, weights.beta = weight.SNP) #weights matrix for SNPs
+    diag.tmp <- custom.weight
   }
+
   diag(KC) <- diag.tmp
   WA <- diag(K)
 
@@ -181,7 +186,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                       rho.SNP = c(0, 0.5, 1),
                                       rho.trait = c(0.5, 5, 1),
                                       rho.drug = c(0, 0.5, 1),
-                                      weight.SNP = c(1, 25)){
+                                      weight.SNP = c(1, 25),
+                                      custom.weight = NULL){
   ## start from beta.est and beta.cov
   D <- length(drug.list)
   K <- length(trait.list)
@@ -203,7 +209,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                        threshold = threshold,
                                        weight.commonSNP = weight.commonSNP,
                                        rho.SNP = rho.SNP, rho.trait = rho.trait,
-                                       rho.drug = rho.drug, weight.SNP = weight.SNP
+                                       rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                       custom.weight = custom.weight
     )$p,silent = T)
 
     ## STMV p value
@@ -224,7 +231,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                             threshold = threshold,
                                             weight.commonSNP = weight.commonSNP,
                                             rho.SNP = rho.SNP, rho.trait = 1,
-                                            rho.drug = rho.drug, weight.SNP = weight.SNP
+                                            rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                            custom.weight = custom.weight
       )$p, silent = T)
 
     }
@@ -271,7 +279,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                      threshold = threshold,
                                                      weight.commonSNP = weight.commonSNP,
                                                      rho.SNP = 1, rho.trait = rho.trait,
-                                                     rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                     rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                     custom.weight = custom.weight
           )$p, silent = T)
           ## STSV p value
           for(k in 1:K) {
@@ -291,7 +300,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                           threshold = threshold,
                                                           weight.commonSNP = weight.commonSNP,
                                                           rho.SNP = 1, rho.trait = 1,
-                                                          rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                          rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                          custom.weight = custom.weight
             )$p, silent = T)
 
           }
@@ -314,7 +324,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                      threshold = threshold,
                                                      weight.commonSNP = weight.commonSNP,
                                                      rho.SNP = 1, rho.trait = rho.trait,
-                                                     rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                     rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                     custom.weight = custom.weight
           )$p, silent = T)
 
           ## STSV p value
@@ -335,7 +346,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                           threshold = threshold,
                                                           weight.commonSNP = weight.commonSNP,
                                                           rho.SNP = 1, rho.trait = 1,
-                                                          rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                          rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                          custom.weight = custom.weight
             )$p, silent = T)
           }
         }
@@ -362,7 +374,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                        threshold = threshold,
                                        weight.commonSNP = weight.commonSNP,
                                        rho.SNP = rho.SNP, rho.trait = rho.trait,
-                                       rho.drug = rho.drug, weight.SNP = weight.SNP
+                                       rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                       custom.weight = custom.weight
     )$p,silent = T)
 
     ## STMV p value
@@ -385,7 +398,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                             threshold = threshold,
                                             weight.commonSNP = weight.commonSNP,
                                             rho.SNP = rho.SNP, rho.trait = 1,
-                                            rho.drug = rho.drug, weight.SNP = weight.SNP
+                                            rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                            custom.weight = custom.weight
       )$p, silent = T)
 
     }
@@ -432,7 +446,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                      threshold = threshold,
                                                      weight.commonSNP = weight.commonSNP,
                                                      rho.SNP = 1, rho.trait = rho.trait,
-                                                     rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                     rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                     custom.weight= custom.weight
           )$p, silent = T)
 
           ## STSV p value
@@ -455,7 +470,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                           threshold = threshold,
                                                           weight.commonSNP = weight.commonSNP,
                                                           rho.SNP = 1, rho.trait = 1,
-                                                          rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                          rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                          custom.weight= custom.weight
             )$p, silent = T)
           }
         }else{
@@ -488,7 +504,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                      threshold = threshold,
                                                      weight.commonSNP = weight.commonSNP,
                                                      rho.SNP = 1, rho.trait = rho.trait,
-                                                     rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                     rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                     custom.weight = custom.weight
           )$p, silent = T)
 
           ## STSV p value
@@ -511,7 +528,8 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
                                                           threshold = threshold,
                                                           weight.commonSNP = weight.commonSNP,
                                                           rho.SNP = 1, rho.trait = 1,
-                                                          rho.drug = rho.drug, weight.SNP = weight.SNP
+                                                          rho.drug = rho.drug, weight.SNP = weight.SNP,
+                                                          custom.weight = custom.weight
             )$p, silent = T)
           }
 
@@ -562,6 +580,7 @@ MAGENTA.eq4.4cat.sumstats <- function(beta.sumstats.obj, MAF, KA, drugStruct = "
 MAGENTA.eq3.4cat.sumstats <- function(beta.sumstats.obj, test, MAF, KA, ref = NULL, trait.list,
                                       rho.trait = c(0.5, 1, 5), rho.SNP = c(0, 0.5, 1),
                                       rho.drug = c(0, 0.5, 1), output = "omnibus",
+                                      custom.weight = NULL,
                                       weight = c(1, 25), cct = TRUE){
   beta.sumstats <- beta.sumstats.obj$beta.sumstats
   beta.sumstats.SPA <- beta.sumstats.obj$beta.sumstats.SPA
@@ -619,6 +638,7 @@ MAGENTA.eq3.4cat.sumstats <- function(beta.sumstats.obj, test, MAF, KA, ref = NU
     MTMV.p <- MAGENTA.eq3.sumstats(analyze.snp = analyze.snp[analyze.trait],
                                    beta.sumstats = beta.sumstats.MT, test = test,
                                    MAF = MAF,
+                                   custom.weight = custom.weight,
                                    rho.trait = rho.trait, rho.SNP = rho.SNP,
                                    rho.drug = rho.drug,
                                    KA = KA[which(sapply(analyze.snp, function(x) length(x) != 0)),
@@ -641,7 +661,8 @@ MAGENTA.eq3.4cat.sumstats <- function(beta.sumstats.obj, test, MAF, KA, ref = NU
                                         rho.trait = rho.trait, rho.SNP = rho.SNP,
                                         rho.drug = rho.drug, test = test,
                                         MAF = MAF, KA = KA[k,k, drop = FALSE],cct = cct,
-                                        ref = ref, weight = weight)
+                                        ref = ref, weight = weight,
+                                        custom.weight = custom.weight)
     }
     names(STMV.p) <- trait.list
 
@@ -681,7 +702,8 @@ MAGENTA.eq3.4cat.sumstats <- function(beta.sumstats.obj, test, MAF, KA, ref = NU
                                                rho.trait = rho.trait, rho.SNP = rho.SNP,
                                                rho.drug = rho.drug, test = test,
                                                MAF = SNP.MAF, KA = KA[SNP.trait, SNP.trait, drop = FALSE],
-                                               cct = cct, ref = ref, weight = weight)
+                                               cct = cct, ref = ref, weight = weight,
+                                               custom.weight = custom.weight)
 
         ## single-trait single-SNP p-value
         for(k in SNP.trait) {
@@ -721,7 +743,8 @@ MAGENTA.eq3.4cat.sumstats <- function(beta.sumstats.obj, test, MAF, KA, ref = NU
                                                       rho.trait = rho.trait, rho.SNP = rho.SNP,
                                                       rho.drug = rho.drug, test = test,
                                                       MAF = SNP.MAF, KA = KA[k,k,drop = FALSE], cct = cct,
-                                                      ref = ref, weight = weight)
+                                                      ref = ref, weight = weight,
+                                                      custom.weight = custom.weight)
           }
 
         }
@@ -771,7 +794,7 @@ MAGENTA.eq3.4cat.sumstats <- function(beta.sumstats.obj, test, MAF, KA, ref = NU
 }
 MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref = NULL,
                                   rho.trait = c(0.5, 1, 5), rho.SNP = c(0, 0.5, 1),
-                                  rho.drug = c(0, 0.5, 1),
+                                  rho.drug = c(0, 0.5, 1),custom.weight = NULL,
                                   weight = c(1, 25), cct = TRUE){
   # beta.sumstats <- beta.sumstats.obj$beta.sumstats
   D <- length(beta.sumstats)
@@ -891,7 +914,11 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
   lambda <- expand.grid(rho.trait =rho.trait, rho.SNP = rho.SNP, rho.drug = rho.drug)
 
   KC <- diag(m.total)
-  diag.tmp <- Beta.Weights(MAF, weights.beta = weight) #weights matrix for SNPs
+  if(is.null(custom.weight)){
+    diag.tmp <- Beta.Weights(MAF, weights.beta = weight) #weights matrix for SNPs
+  }else{
+    diag.tmp <- custom.weight
+  }
 
   diag(KC) <- diag.tmp
   WA <- diag(K)
@@ -1022,7 +1049,8 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
 #' @param MAF.thres A threshold to select SNPs with MAF > thres to be included in the single-variant analysis
 #' @param ref the reference environmental group. If empty, it will be set as D (the largest group ID)
 #' @param diffweight whether use different weight for common and rare variants. Default is false.
-#' @param weight.SNP The weight function for each SNP. Default is dbeta(MAF, 1, 25)
+#' @param weight.SNP The parameters of weight function for each SNP. Default is c(1, 25) representing beta distribution dbeta(MAF, 1, 25)
+#' @param custom.weight The vector of custom weight provided by user. The default is Null, where the dbeta(MAF, 1, 25) weight will be used.
 #' @param weight.commonSNP if diffweight is True, the users should specify the weight function for common SNPs, like dbeta(MAF, 1, 1)
 #' @param rho.SNP \eqn{rho_S} denotes the tuning parameters for between-SNP signal structure. Default is (0, 0.5,1)
 #' @param rho.trait \eqn{rho_T} denotes the tuning parameters for between-trait signal structure. Default is (0.5,1, 5)
@@ -1035,23 +1063,23 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
 #' @examples
 #' \donttest{
 #' #### start from individual-level data
-#'#' data(rawdata)
+#'#' data("rawdata")
 #' names(rawdata)
 #' attach(rawdata)
-#'K <- 3
-#'KA <- matrix(c(1, -0.03, 0.3, -0.03, 1, -0.535, 0.3, -0.535, 1), byrow = T, nrow = 3)
-#'rownames(KA) <- colnames(KA) <- paste0("Trait", 1:K)
-#'trait.list = paste0("Trait", 1:K)
-#'drug.list = paste0("Drug", 0:1)
-#'D <- 2
-#'MAF <- colMeans(geno.dat[, -1])/2
-#'R.C <- cor(geno.dat[, -1])
-#'R.C[is.na(R.C)] <- 0
-#'## start from the individual-level data ##
-#'beta.sumstats.obj <- Get_beta_cov_data(geno.dat = geno.dat, dat = dat,
+#' K <- 3
+#' KA <- matrix(c(1, -0.03, 0.3, -0.03, 1, -0.535, 0.3, -0.535, 1), byrow = TRUE, nrow = 3)
+#' rownames(KA) <- colnames(KA) <- paste0("Trait", 1:K)
+#' trait.list = paste0("Trait", 1:K)
+#' drug.list = paste0("Drug", 0:1)
+#' D <- 2
+#' MAF <- colMeans(geno.dat[, -1])/2
+#' R.C <- cor(geno.dat[, -1])
+#' R.C[is.na(R.C)] <- 0
+#' ## start from the individual-level data ##
+#' beta.sumstats.obj <- Get_beta_cov_data(geno.dat = geno.dat, dat = dat,
 #' cov.list = c("cov1", "cov2"),
 #' env = "treatment",
-#' D = "ID", type = "continuous",
+#' ID = "ID", type = "continuous",
 #' trait.list = paste0("Trait", 1:K),
 #' SNP.list = colnames(geno.dat)[-1])
 #' names(beta.sumstats.obj)
@@ -1063,17 +1091,17 @@ MAGENTA.eq3.sumstats <- function( analyze.snp, beta.sumstats, test, MAF, KA, ref
 #' detach(rawdata)
 #'
 #' #### start from score summary statistics
-#' data(sumstats.dat)
+#' data("sumstats.dat")
 #' names(sumstats.dat)
 #' attach(sumstats.dat)
 #' str(common.sumstats)
 #' zeta.ret <- Get_zeta(common.sumstats = common.sumstats, trait.list = paste("Trait", 1:K))
-# zeta.ret
+#  zeta.ret
 #' str(sumstats)
 #' #prepare the summary statistics for joint test using trait-specific score summary statistics
-#' beta.sumstats.obj <- Get_beta_cov_UV(sumstats = sumstats, MAF = MAF, R.C = R.C,
+#' beta.sumstats.obj <- Get_beta_cov_UV(sumstats.obj = sumstats.dat, MAF = MAF, R.C = R.C,
 #'                                      zeta.ret = zeta.ret, KA = KA,
-#'                                      test = "joint",
+#'                                      test = "joint", type  = "continuous",
 #'                                      trait.list = paste0("Trait", 1:K))
 #' names(beta.sumstats.obj)
 #' MAGENTA(beta.sumstats.obj = beta.sumstats.obj,
@@ -1088,6 +1116,7 @@ MAGENTA <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
                     R.C, cct = TRUE, MAC10.bygrp = NULL, test, ref = NULL,
                     diffweight = FALSE, way,
                     threshold = 0.05,
+                    custom.weight = NULL,
                     weight.commonSNP = NULL,
                     rho.SNP = c(0, 0.5, 1),
                     rho.trait = c(0.5, 5, 1),
@@ -1107,7 +1136,9 @@ MAGENTA <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
                               rho.trait = rho.trait,
                               rho.SNP = rho.SNP,
                               rho.drug = rho.drug,
-                              ref = ref)
+                              ref = ref,
+                              custom.weight = custom.weight,
+                              weight = weight.SNP)
   }else if(way == "eq4") {
     message("Using eq4 to conduct MAGENTA analysis")
 
@@ -1120,6 +1151,8 @@ MAGENTA <- function(beta.sumstats.obj, MAF, KA, drugStruct = "AR1",
                                          rho.SNP = rho.SNP,
                                          rho.drug = rho.drug,
                                          ref = ref,
+                                         custom.weight = custom.weight,
+                                         weight.SNP = weight.SNP,
                                          MAC10.bygrp = MAC10.bygrp,
                                          R.C = R.C)
   }

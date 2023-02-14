@@ -137,17 +137,18 @@ cal.sum <- function(simdata, genotype, covariance = TRUE){
 #' @export
 #' @examples
 #' \donttest{
-#' data(sumstats.dat)
+#' data("sumstats.dat")
 #' names(sumstats.dat)
 #' attach(sumstats.dat)
 #' str(common.sumstats)
+#' K <- 3
 #' zeta.ret <- Get_zeta(common.sumstats = common.sumstats, trait.list = paste("Trait", 1:K))
 #' # zeta.ret
 #' str(sumstats)
-# prepare the summary statistics for joint test using trait-specific score summary statistics
-#' beta.sumstats.obj <- Get_beta_cov_UV(sumstats = sumstats, MAF = MAF, R.C = R.C,
+#' ##prepare the summary statistics for joint test using trait-specific score summary statistics
+#' beta.sumstats.obj <- Get_beta_cov_UV(sumstats.obj = sumstats.dat, MAF = MAF, R.C = R.C,
 #'                                      zeta.ret = zeta.ret, KA = KA,
-#'                                      test = "joint",
+#'                                      test = "joint",  type = "continuous",
 #'                                    trait.list = paste0("Trait", 1:K))
 #' names(beta.sumstats.obj)
 #' detach(sumstats.dat)
@@ -596,11 +597,11 @@ convert_UV_to_betacov <- function(D, K, snp.list, sumstats, test, R.C, ref){
 #' @export
 #' @examples
 #' \donttest{
-#' data(rawdata)
+#' data("rawdata")
 #' names(rawdata)
 #' attach(rawdata)
 #'K <- 3
-#'KA <- matrix(c(1, -0.03, 0.3, -0.03, 1, -0.535, 0.3, -0.535, 1), byrow = T, nrow = 3)
+#'KA <- matrix(c(1, -0.03, 0.3, -0.03, 1, -0.535, 0.3, -0.535, 1), byrow = TRUE, nrow = 3)
 #'rownames(KA) <- colnames(KA) <- paste0("Trait", 1:K)
 #'trait.list = paste0("Trait", 1:K)
 #'drug.list = paste0("Drug", 0:1)
@@ -612,7 +613,7 @@ convert_UV_to_betacov <- function(D, K, snp.list, sumstats, test, R.C, ref){
 #'beta.sumstats.obj <- Get_beta_cov_data(geno.dat = geno.dat, dat = dat,
 #' cov.list = c("cov1", "cov2"),
 #' env = "treatment",
-#' D = "ID", type = "continuous",
+#' ID = "ID", type = "continuous",
 #' trait.list = paste0("Trait", 1:K),
 #' SNP.list = colnames(geno.dat)[-1])
 #' names(beta.sumstats.obj)
@@ -901,16 +902,14 @@ Get_beta_cov_data <- function(dat, geno.dat,
 #' @export
 #' @examples
 #' \donttest{data(zeta.example)
-#' attach(zeta.example)
-#' # Downloading independent common SNPs from 1000Genome data set.
-#' githubURL <- "https://github.com/lan/MTAR/blob/master/indp_snps.1KG.rda?raw=true"
-#' utils::download.file(githubURL,"1kgfile")
-#' load("1kgfile")
-#' zeta1 <- Get_zeta(dat = dat, indp.common.geno.dat = indp.common.geno.dat,
-#' trait.list = paste0("Trait", 1:K),
-#' cov.list = c("cov1", "cov2"), env = "treatment")
-#' zeta1
-#' detach(zeta.example)
+#' data("sumstats.dat")
+#' names(sumstats.dat)
+#' attach(sumstats.dat)
+#' str(common.sumstats)
+#' K <- 3
+#' zeta.ret <- Get_zeta(common.sumstats = common.sumstats, trait.list = paste("Trait", 1:K))
+#' zeta.ret
+#' detach(sumstats.dat)
 #' }
 Get_zeta <- function(common.sumstats, trait.list) {
   drug.list <- names(common.sumstats)

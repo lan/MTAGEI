@@ -4,7 +4,7 @@ author: Lan Luo
 output: rmarkdown::html_vignette
 bibliography: reference.bib
 vignette: >
-  %\VignetteIndexEntry{MAGENTA}
+  %\VignetteIndexEntry{Multi-trait Analysis of Gene-by-Environment Interactions in Large-scale Genetic Studies}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

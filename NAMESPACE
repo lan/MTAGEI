@@ -5,20 +5,13 @@ export(Get_beta_cov_data)
 export(Get_zeta)
 export(MAGENTA)
 import(MASS)
-<<<<<<< HEAD
-=======
-import(Matrix)
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 import(stats)
 import(survival)
 import(utils)
 importFrom(CompQuadForm,davies)
 importFrom(CompQuadForm,farebrother)
 importFrom(CompQuadForm,liu)
-<<<<<<< HEAD
 importFrom(Matrix,bdiag)
 importFrom(SPAtest,ScoreTest_SPA_wMeta)
-=======
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 importFrom(caret,findCorrelation)
 importFrom(stringr,str_split)

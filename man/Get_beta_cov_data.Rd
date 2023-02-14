@@ -4,8 +4,17 @@
 \alias{Get_beta_cov_data}
 \title{Calculate the summary statistics required by MAGENTA given the individual-level data}
 \usage{
-Get_beta_cov_data(dat, geno.dat, cov.list, env, ID = "ID", SNP.list,
-  stats = "score", trait.list, type)
+Get_beta_cov_data(
+  dat,
+  geno.dat,
+  cov.list,
+  env,
+  ID = "ID",
+  SNP.list,
+  stats = "score",
+  trait.list,
+  type
+)
 }
 \arguments{
 \item{dat}{a matrix containing traits and covariates data. Each row represent one subject.}
@@ -16,11 +25,8 @@ Get_beta_cov_data(dat, geno.dat, cov.list, env, ID = "ID", SNP.list,
 
 \item{env}{which column represents the environmental variable}
 
-<<<<<<< HEAD
 \item{ID}{indicator which column is unique subject ID}
 
-=======
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 \item{SNP.list}{a vector containing the SNPs}
 
 \item{stats}{Use the score summary statistics or wald summary statistics. Default is "score".}
@@ -28,11 +34,6 @@ Get_beta_cov_data(dat, geno.dat, cov.list, env, ID = "ID", SNP.list,
 \item{trait.list}{a vector containing the traits}
 
 \item{type}{type of the traits data.}
-<<<<<<< HEAD
-=======
-
-\item{test}{if set to "joint", the function will conduct joint test; if set to "GEI", the function will return GEI p value}
->>>>>>> 1acaa07efa8608a46c52ce8a09843a12e3dbcfe1
 }
 \value{
 summary statistics (beta, beta.cov) required by MAGENTA
@@ -42,11 +43,11 @@ This function allows you to calculate the summary statistics (beta, beta.cov) gi
 }
 \examples{
 \donttest{
-data(rawdata)
+data("rawdata")
 names(rawdata)
 attach(rawdata)
 K <- 3
-KA <- matrix(c(1, -0.03, 0.3, -0.03, 1, -0.535, 0.3, -0.535, 1), byrow = T, nrow = 3)
+KA <- matrix(c(1, -0.03, 0.3, -0.03, 1, -0.535, 0.3, -0.535, 1), byrow = TRUE, nrow = 3)
 rownames(KA) <- colnames(KA) <- paste0("Trait", 1:K)
 trait.list = paste0("Trait", 1:K)
 drug.list = paste0("Drug", 0:1)
@@ -58,7 +59,7 @@ R.C[is.na(R.C)] <- 0
 beta.sumstats.obj <- Get_beta_cov_data(geno.dat = geno.dat, dat = dat,
 cov.list = c("cov1", "cov2"),
 env = "treatment",
-D = "ID", type = "continuous",
+ID = "ID", type = "continuous",
 trait.list = paste0("Trait", 1:K),
 SNP.list = colnames(geno.dat)[-1])
 names(beta.sumstats.obj)
